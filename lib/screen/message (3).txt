@@ -1,0 +1,191 @@
+{
+  "disclaimer": "NOT SUITABLE FOR NAVIGATIONAL PURPOSES. API Hood does not warrant that the provided data will be free from errors or omissions. Provided data are NOT suitable for usage where someone could be harmed or suffer any damage.",
+  "status": 200,
+  "latitude": 44.414,
+  "longitude": -2.097,
+  "origin": {
+    "latitude": 44.4375,
+    "longitude": -2.125,
+    "distance": 3.43,
+    "unit": "km"
+  },
+  "datums": { "LAT": -2.3313888549804687, "HAT": 2.357917938232422 },
+  "timestamp": 1649583696,
+  "datetime": "2022-04-10T09:41:36+00:00",
+  "unit": "m",
+  "timezone": "UTC",
+  "datum": "MSL",
+  "extremes": [
+    {
+      "timestamp": 1649587375,
+      "datetime": "2022-04-10T10:42:55+00:00",
+      "height": 0.43898794566211585,
+      "state": "HIGH TIDE"
+    },
+    {
+      "timestamp": 1649609476,
+      "datetime": "2022-04-10T16:51:16+00:00",
+      "height": -0.48268293800126866,
+      "state": "LOW TIDE"
+    },
+    {
+      "timestamp": 1649632672,
+      "datetime": "2022-04-10T23:17:52+00:00",
+      "height": 0.5971035282234155,
+      "state": "HIGH TIDE"
+    },
+    {
+      "timestamp": 1649655733,
+      "datetime": "2022-04-11T05:42:13+00:00",
+      "height": -0.6856599168028904,
+      "state": "LOW TIDE"
+    }
+  ],
+  "heights": [
+    {
+      "timestamp": 1649583696,
+      "datetime": "2022-04-10T09:41:36+00:00",
+      "height": 0.3970413089133008,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649587296,
+      "datetime": "2022-04-10T10:41:36+00:00",
+      "height": 0.43896834861741,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649590896,
+      "datetime": "2022-04-10T11:41:36+00:00",
+      "height": 0.39491609151191803,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649594496,
+      "datetime": "2022-04-10T12:41:36+00:00",
+      "height": 0.24828320958023667,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649598096,
+      "datetime": "2022-04-10T13:41:36+00:00",
+      "height": 0.020612668957558946,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649601696,
+      "datetime": "2022-04-10T14:41:36+00:00",
+      "height": -0.21767161784832817,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649605296,
+      "datetime": "2022-04-10T15:41:36+00:00",
+      "height": -0.3988038469353631,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649608896,
+      "datetime": "2022-04-10T16:41:36+00:00",
+      "height": -0.48093722004369993,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649612496,
+      "datetime": "2022-04-10T17:41:36+00:00",
+      "height": -0.43354094370475793,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649616096,
+      "datetime": "2022-04-10T18:41:36+00:00",
+      "height": -0.2521754829196245,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649619696,
+      "datetime": "2022-04-10T19:41:36+00:00",
+      "height": 0.012998011892458741,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649623296,
+      "datetime": "2022-04-10T20:41:36+00:00",
+      "height": 0.27614539229719387,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649626896,
+      "datetime": "2022-04-10T21:41:36+00:00",
+      "height": 0.47128085148410415,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649630496,
+      "datetime": "2022-04-10T22:41:36+00:00",
+      "height": 0.5780489516753976,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649634096,
+      "datetime": "2022-04-10T23:41:36+00:00",
+      "height": 0.5880998710677287,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649637696,
+      "datetime": "2022-04-11T00:41:36+00:00",
+      "height": 0.4752227636634836,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649641296,
+      "datetime": "2022-04-11T01:41:36+00:00",
+      "height": 0.23342606825496995,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649644896,
+      "datetime": "2022-04-11T02:41:36+00:00",
+      "height": -0.08100641176451849,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649648496,
+      "datetime": "2022-04-11T03:41:36+00:00",
+      "height": -0.38218348550153525,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649652096,
+      "datetime": "2022-04-11T04:41:36+00:00",
+      "height": -0.6014679202634204,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649655696,
+      "datetime": "2022-04-11T05:41:36+00:00",
+      "height": -0.6856509167134276,
+      "state": "FALLING"
+    },
+    {
+      "timestamp": 1649659296,
+      "datetime": "2022-04-11T06:41:36+00:00",
+      "height": -0.6000001900912407,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649662896,
+      "datetime": "2022-04-11T07:41:36+00:00",
+      "height": -0.3634660366744183,
+      "state": "RISING"
+    },
+    {
+      "timestamp": 1649666496,
+      "datetime": "2022-04-11T08:41:36+00:00",
+      "height": -0.055058547149811114,
+      "state": "RISING"
+    }
+  ],
+  "copyright": "©2019 API Hood. Generated using AVISO+ Products."
+}

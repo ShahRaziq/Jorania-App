@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "57376818071",
+    "project_id": "spmlm-ca6bf",
+    "storage_bucket": "spmlm-ca6bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57376818071:android:ac4a8c8af3daa164f77ad2",
+        "android_client_info": {
+          "package_name": "com.example.genshin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "57376818071-mlklm96am9flh8vh6sbp2na7qufbpjlc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWIhgVgeXvQXhnB9f1vml-c8QPNNoZXKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "57376818071-mlklm96am9flh8vh6sbp2na7qufbpjlc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
