@@ -39,25 +39,6 @@ class _HomePageState extends State<HomePage> {
   ];
   String text = "";
 
-  // request() async {
-  //   final response = await http.get(
-  //     Uri.parse(
-  //         "https://tides.p.rapidapi.com/tides?longitude=103.3317&latitude=3.8168&interval=60&duration=1440"),
-  //     // Send authorization headers to the backend.
-  //     headers: {
-  //       "X-RapidAPI-Host": "tides.p.rapidapi.com",
-  //       "X-RapidAPI-Key": "e0c26bb0a6mshd8ee3db38ec9a94p120674jsnaf21c4d3dfcc",
-  //     },
-  //   );
-
-//     Map valueMap = json.decode(response.body);
-//     //  text = valueMap["heights"][3]["height"].toString();
-// setState(() {
-
-// });
-
-//     log(response.body);
-//   }
   String username = "";
   FireStoreService fireStoreService = FireStoreService();
   @override
