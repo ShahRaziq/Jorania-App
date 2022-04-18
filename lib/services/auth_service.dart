@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:Jorania/screen/signup_screeen.dart';
 
 class AuthService {
   //log in

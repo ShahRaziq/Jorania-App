@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 
 import 'package:Jorania/screen/login_screen.dart';
 import 'package:Jorania/services/auth_service.dart';
-import 'package:Jorania/services/firestore_service.dart';
 
 import '../services/auth_service.dart';
 

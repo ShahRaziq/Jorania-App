@@ -1,12 +1,13 @@
 import 'dart:developer';
-import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
+import 'package:Jorania/services/weather_service.dart';
 import 'package:http/http.dart' as http;
-import 'dart:ffi';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:Jorania/custom/weatherCard.dart';
 import 'package:Jorania/screen/login_screen.dart';
@@ -22,7 +23,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var _selectedIndex = 0;
+  late String dateString;
+  WeatherModel? weatherModel;
+  int temp = 0;
+  String icon = "01d";
+  Position? currentPosition;
+  List<Placemark>? placemarks;
   final screens = [
     Center(
       child: Text('Home', style: TextStyle(fontSize: 60)),
@@ -45,8 +51,12 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    initializeDateFormatting('ms');
+    dateString = DateFormat('EEEE, d, MMMM', "ms").format(DateTime.now());
+    _getCurrentLocation();
     fireStoreService.getdata().then((value) {
       username = value.data()!["name"];
+      getweather();
       setState(() {});
     });
   }
@@ -58,7 +68,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.grey),
+          iconTheme: IconThemeData(color: Colors.transparent),
           title: Text(
             "Jorania",
             style: TextStyle(fontSize: 30, color: Colors.white),
@@ -133,9 +143,17 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   SizedBox(height: 20),
-                  Weather(date: "", temp: "", location: "", weather: "sunny"),
+                  WeatherCard(
+                    date: dateString,
+                    temp: temp.toString(),
+                    location: "",
+                    weather: "sunny",
+                    icon: icon,
+                    state: placemarks != null ?  placemarks!.elementAt(0).administrativeArea! : "",
+                    city: placemarks != null ?  placemarks!.elementAt(0).locality! : "",
+                  ),
                   SizedBox(height: 30),
-                  Text("Ramalan air pasang surut:",
+                  Text("Ramalan pasang surut air 💧:",
                       style: TextStyle(
                           color: Color(0xff323F4B),
                           fontSize: 20,
@@ -234,5 +252,42 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void getweather() async {
+    await _getCurrentLocation();
+    final response = await http.get(Uri.parse(
+        'http://api.airvisual.com/v2/nearest_city?lat=${currentPosition!.latitude}&lon=${currentPosition!.longitude}&key=ebddbd20-8b93-4184-89b7-55ad20cc40c1'));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      WeatherModel weatherModel = weatherModelFromJson(response.body);
+      print(response.body);
+      print(weatherModel.data!.current!.weather!.tp);
+      
+      setState(() {
+        temp = weatherModel.data!.current!.weather!.tp!;
+        icon = weatherModel.data!.current!.weather!.ic!;
+      });
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
+  }
+
+  Future _getCurrentLocation() async {
+    Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best,
+            forceAndroidLocationManager: true)
+        .then((Position position) async {
+      currentPosition = position;
+      placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      print(placemarks);
+    }).catchError((e) {
+      print(e);
+    });
   }
 }

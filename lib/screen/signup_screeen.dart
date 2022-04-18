@@ -1,9 +1,7 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:Jorania/screen/login_screen.dart';
-import 'package:Jorania/screen/nav_bar.dart';
 import 'package:Jorania/services/auth_service.dart';
 import 'package:Jorania/services/firestore_service.dart';
 import '../services/auth_service.dart';
@@ -117,6 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (!regex.hasMatch(value)) {
                         return ("Masukkan minima 6 digit/huruf");
                       }
+                      return null;
                     },
                     onSaved: (value) {
                       passwordController.text = value!;

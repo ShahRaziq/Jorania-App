@@ -1,0 +1,1 @@
+ {"status":"success","data":{"city":"Kuantan","state":"Pahang","country":"Malaysia","location":{"type":"Point","coordinates":[103.29655,3.8192167]},"current":{"weather":{"ts":"2022-04-17T07:00:00.000Z","tp":30,"pr":1006,"hu":65,"ws":3.01,"wd":79,"ic":"04d"},"pollution":{"ts":"2022-04-17T06:00:00.000Z","aqius":50,"mainus":"p2","aqicn":17,"maincn":"p2"}}}}

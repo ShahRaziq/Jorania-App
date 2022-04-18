@@ -1,30 +1,48 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:weather_icons/weather_icons.dart';
 
-class Weather extends StatelessWidget {
-  final String temp, location, weather, date;
+class WeatherCard extends StatelessWidget {
+  final String temp, location, weather, date, icon, city, state;
 
-  const Weather({
+  const WeatherCard({
     Key? key,
     required this.date,
     required this.temp,
     required this.location,
     required this.weather,
+    required this.icon,
+    this.state = "",
+    this.city = "",
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool day = true;
+    final now = DateTime.now();
+    Color color() {
+      log(now.toString());
+      if (now.hour > 6 && now.hour < 19) {
+        return Color.fromARGB(255, 65, 125, 180);
+      }else{return Colors.white;}     
+    }
+
+    if (now.hour > 6 && now.hour < 19) {
+      day = false;
+    } else {
+      day = true;
+    }
     // print(MediaQuery.of(context).size.height.toString());
     //print(MediaQuery.of(context).size.width.toString());
     return Container(
       decoration: BoxDecoration(
-          color: weather == "rainy" ? Colors.grey : Color(0xff72D6F8),
+          color: day ? Colors.grey : Color.fromARGB(255, 180, 222, 236),
           borderRadius: BorderRadius.circular(25)),
       child: Stack(
         children: [
           Positioned(
-            child: weather == "rainy"
+            child: day
                 ? Image.asset(
                     "asset/rain.png",
                     height: 200.h,
@@ -38,8 +56,8 @@ class Weather extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "27°",
-                  style: TextStyle(fontSize: 70.sp, color: Colors.white),
+                  "$temp°",
+                  style: TextStyle(fontSize: 70.sp, color: color()),
                 ),
                 Column(
                   children: [
@@ -52,9 +70,8 @@ class Weather extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Jumaat, 15 April, ",
-                              style: TextStyle(
-                                  fontSize: 20.sp, color: Colors.white),
+                              "$date, ",
+                              style: TextStyle(fontSize: 20.sp, color: color()),
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,20 +80,26 @@ class Weather extends StatelessWidget {
                                 Icon(
                                   Icons.location_on,
                                   size: 23.w,
-                                  color: Colors.white,
+                                  color: color(),
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "Inderapura, Kuantan",
-                                      style: TextStyle(
-                                          fontSize: 20.sp, color: Colors.white),
+                                    SizedBox(
+                                      width: 181.w,
+                                      child: Text(
+                                        "$city,",
+                                        style: TextStyle(
+                                            fontSize: 20.sp, color: color()),
+                                      ),
                                     ),
-                                    Text(
-                                      "Pahang",
-                                      style: TextStyle(
-                                          fontSize: 20.sp, color: Colors.white),
+                                    SizedBox(
+                                      width: 181.w,
+                                      child: Text(
+                                        state,
+                                        style: TextStyle(
+                                            fontSize: 20.sp, color: color()),
+                                      ),
                                     )
                                   ],
                                 ),
@@ -84,13 +107,10 @@ class Weather extends StatelessWidget {
                             )
                           ],
                         ),
-                        Icon(
-                          weather == "rainy"
-                              ? Icons.cloud_outlined
-                              : Icons.wb_sunny_outlined,
-                          size: 70.w,
-                          color: Colors.white,
-                        ),
+                        Image.asset(
+                          "asset/$icon.png",
+                          height: 70.h,
+                        )
                       ],
                     )
                   ],

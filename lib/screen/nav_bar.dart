@@ -1,12 +1,8 @@
-import 'dart:ffi';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:Jorania/custom/weatherCard.dart';
 import 'package:Jorania/screen/favorite.dart';
 import 'package:Jorania/screen/homepage.dart';
 import 'package:Jorania/screen/list_service.dart';
-import 'package:Jorania/screen/login_screen.dart';
 import 'package:Jorania/screen/map.dart';
 
 class NavBar extends StatefulWidget {
