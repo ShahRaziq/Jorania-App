@@ -1,4 +1,6 @@
+import 'package:Jorania/screen/noConnection_screen.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:Jorania/screen/favorite.dart';
 import 'package:Jorania/screen/homepage.dart';
@@ -13,6 +15,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
+  var subscription;
   var _selectedIndex = 0;
   final screens = [
     HomePage(),
@@ -20,6 +23,31 @@ class _NavBarState extends State<NavBar> {
     FavoritePage(),
     ListServicePage(),
   ];
+
+  @override
+  initState() {
+    super.initState();
+
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      // Got a new connectivity status!
+      if(result!=ConnectivityResult.none){
+         Navigator.push(context, MaterialPageRoute(builder: (c) => NavBar()));
+      }else{
+         Navigator.push(context, MaterialPageRoute(builder: (c) => NoConScreen()));
+      }
+    });
+  }
+
+// Be sure to cancel subscription after you are done
+  @override
+  dispose() {
+    super.dispose();
+
+    subscription.cancel();
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         body: IndexedStack(

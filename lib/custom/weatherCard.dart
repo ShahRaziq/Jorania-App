@@ -43,10 +43,12 @@ class WeatherCard extends StatelessWidget {
         children: [
           Positioned(
             child: day
-                ? Image.asset(
-                    "asset/rain.png",
-                    height: 200.h,
-                  )
+                ? Opacity(opacity: 0.6,
+                  child: Image.asset(
+                      "asset/night.png",
+                      height: 200.h,
+                    ),
+                )
                 : Image.asset("asset/Group 3.png"),
             right: 0,
             top: -20,

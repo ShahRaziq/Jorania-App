@@ -1,5 +1,6 @@
 import 'dart:developer';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:Jorania/services/airpasangsurutScrap.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,7 @@ import 'package:Jorania/screen/login_screen.dart';
 import 'package:Jorania/services/firestore_service.dart';
 import 'package:Jorania/web_view/jupem.dart';
 import 'package:Jorania/web_view/tideForecast.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,6 +31,8 @@ class _HomePageState extends State<HomePage> {
   String icon = "01d";
   Position? currentPosition;
   List<Placemark>? placemarks;
+  Map<String, Map<String, String>>? airPasang;
+
   final screens = [
     Center(
       child: Text('Home', style: TextStyle(fontSize: 60)),
@@ -51,9 +55,18 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //date format malay
     initializeDateFormatting('ms');
     dateString = DateFormat('EEEE, d, MMMM', "ms").format(DateTime.now());
-    _getCurrentLocation();
+
+    //air pasang surut Scrap
+    AirPasangSurut air = AirPasangSurut();
+    air.extractData("Tanjung Gelang").then((value) {
+      airPasang = value;
+      if (mounted) {
+        setState(() {});
+      }
+    });
     fireStoreService.getdata().then((value) {
       username = value.data()!["name"];
       getweather();
@@ -124,6 +137,7 @@ class _HomePageState extends State<HomePage> {
         ),
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(25.0),
             child: SizedBox(
@@ -149,11 +163,15 @@ class _HomePageState extends State<HomePage> {
                     location: "",
                     weather: "sunny",
                     icon: icon,
-                    state: placemarks != null ?  placemarks!.elementAt(0).administrativeArea! : "",
-                    city: placemarks != null ?  placemarks!.elementAt(0).locality! : "",
+                    state: placemarks != null
+                        ? placemarks!.elementAt(0).administrativeArea!
+                        : "",
+                    city: placemarks != null
+                        ? placemarks!.elementAt(0).locality!
+                        : "",
                   ),
                   SizedBox(height: 30),
-                  Text("Ramalan pasang surut air 💧:",
+                  Text("Ramalan air pasang surut  💧:",
                       style: TextStyle(
                           color: Color(0xff323F4B),
                           fontSize: 20,
@@ -164,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    color: Color.fromARGB(255, 228, 118, 160),
+                    color: Color.fromARGB(255, 248, 167, 197),
                     child: InkWell(
                       splashColor:
                           Color.fromARGB(255, 131, 173, 163).withAlpha(50),
@@ -173,41 +191,97 @@ class _HomePageState extends State<HomePage> {
                             MaterialPageRoute(builder: (context) => JupemWV()));
                       },
                       child: Container(
-                          height: 100,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15)),
                           padding: EdgeInsets.all(20.0),
                           child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Column(
                               children: [
-                                Text(
-                                  'Stesen: Tanjung Gelang, Pahang',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 17, color: Colors.white),
+                                // date
+                                airPasang != null
+                                    ? Text(airPasang!.keys.first,
+                                        style: TextStyle(
+                                            fontSize: 25.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white))
+                                    : SizedBox(),
+                                airPasang != null
+                                    ?
+                                    //pasang surut table
+                                    DataTable(
+                                        columns: [
+                                            DataColumn(
+                                                label: Text('Masa',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Colors.deepPurple,
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                            DataColumn(
+                                                label: Text('Ketinggian (cm)',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Colors.deepPurple,
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                          ],
+                                        rows: airPasang![airPasang!.keys.first]!
+                                            .entries
+                                            .map(
+                                              (e) => DataRow(
+                                                cells: [
+                                                  DataCell(Center(
+                                                      child: Text(
+                                                    e.key,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 20.sp),
+                                                  ))),
+                                                  DataCell(Center(
+                                                      child: Text(
+                                                    e.value,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 20.sp),
+                                                  ))),
+                                                ],
+                                              ),
+                                            )
+                                            .toList())
+                                    : SizedBox(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Stesen: Tanjung Gelang, Pahang',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          color: Colors.white,
+                                          height: 2),
+                                    ),
+                                  ],
                                 ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.white,
+                                Text(
+                                  "sumber: laman web rasmi JUPEM",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 107, 88, 192),
+                                      height: 1.6),
                                 ),
                               ],
                             ),
                           )),
                     ),
                   ),
-                  Text(
-                    "sumber: laman web rasmi JUPEM",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 107, 88, 192),
-                    ),
-                  ),
+
                   SizedBox(height: 20),
                   //card forecast.com TideForcastWV
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    color: Colors.purpleAccent,
+                    color: Color.fromARGB(255, 232, 159, 245),
                     child: InkWell(
                       splashColor:
                           Color.fromARGB(255, 131, 173, 163).withAlpha(50),
@@ -216,7 +290,6 @@ class _HomePageState extends State<HomePage> {
                             MaterialPageRoute(builder: (c) => TideForcastWV()));
                       },
                       child: Container(
-                          height: 100,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15)),
                           padding: EdgeInsets.all(20.0),
@@ -255,7 +328,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getweather() async {
-    await _getCurrentLocation();
+    await _determinePosition();
+
     final response = await http.get(Uri.parse(
         'http://api.airvisual.com/v2/nearest_city?lat=${currentPosition!.latitude}&lon=${currentPosition!.longitude}&key=ebddbd20-8b93-4184-89b7-55ad20cc40c1'));
 
@@ -265,7 +339,7 @@ class _HomePageState extends State<HomePage> {
       WeatherModel weatherModel = weatherModelFromJson(response.body);
       print(response.body);
       print(weatherModel.data!.current!.weather!.tp);
-      
+
       setState(() {
         temp = weatherModel.data!.current!.weather!.tp!;
         icon = weatherModel.data!.current!.weather!.ic!;
@@ -277,17 +351,33 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future _getCurrentLocation() async {
-    Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.best,
-            forceAndroidLocationManager: true)
-        .then((Position position) async {
-      currentPosition = position;
-      placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-      print(placemarks);
-    }).catchError((e) {
-      print(e);
-    });
+  Future _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best,
+        forceAndroidLocationManager: true);
+
+    placemarks = await placemarkFromCoordinates(
+        currentPosition!.latitude, currentPosition!.longitude);
   }
 }

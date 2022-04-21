@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
+import 'package:Jorania/screen/noConnection_screen.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Jorania/screen/login_screen.dart';
@@ -12,6 +15,7 @@ class MySplashScreen extends StatefulWidget {
 }
 
 class _MySplashScreenState extends State<MySplashScreen> {
+  dynamic nextScreen = NavBar();
   startTimer() {
     Timer(const Duration(seconds: 3), () async {
       //send user to home screen\
@@ -19,14 +23,29 @@ class _MySplashScreenState extends State<MySplashScreen> {
         Navigator.push(
             context, MaterialPageRoute(builder: (c) => LoginScreen()));
       } else {
-        Navigator.push(context, MaterialPageRoute(builder: (c) => NavBar()));
+        Navigator.push(context, MaterialPageRoute(builder: (c) => nextScreen));
       }
     });
+  }
+
+  Future getConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    log(connectivityResult.toString());
+    if (connectivityResult == ConnectivityResult.none) {
+      nextScreen = NoConScreen();
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    getConnection();
+    var subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      log(result.toString());
+      // Got a new connectivity status!
+    });
     startTimer();
   }
 
