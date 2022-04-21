@@ -83,11 +83,11 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           iconTheme: IconThemeData(color: Colors.transparent),
           title: Text(
-            "Jorania",
+            "",
             style: TextStyle(fontSize: 30, color: Colors.white),
           ),
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           elevation: 0,
           actions: [
             //Log out button
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
               },
               icon: Icon(
                 Icons.logout_rounded,
-                color: Colors.black,
+                color: Colors.grey[700],
               ),
               iconSize: 36,
             )
@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                         : "",
                   ),
                   SizedBox(height: 30),
-                  Text("Ramalan air pasang surut  💧:",
+                  Text("Ramalan air pasang surut 🌊:",
                       style: TextStyle(
                           color: Color(0xff323F4B),
                           fontSize: 20,
@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    color: Color.fromARGB(255, 248, 167, 197),
+                    color: Color.fromARGB(241, 226, 196, 201),
                     child: InkWell(
                       splashColor:
                           Color.fromARGB(255, 131, 173, 163).withAlpha(50),
@@ -298,10 +298,13 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Ramalan terperinci',
+                                  'Ramalan terperinci ',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 17, color: Colors.white),
+                                ),
+                                SizedBox(
+                                  width: 10.w,
                                 ),
                                 Icon(
                                   Icons.arrow_forward_ios,

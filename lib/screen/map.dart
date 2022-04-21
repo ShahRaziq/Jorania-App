@@ -1,6 +1,13 @@
 import 'dart:async';
+
 // import 'dart:html';
 
+import 'package:Jorania/screen/addLocation.dart';
+import 'package:Jorania/screen/place.dart';
+import 'package:Jorania/services/firestore_service.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -15,7 +22,10 @@ class _MapPageState extends State<MapPage> {
   final Completer<GoogleMapController> _controllerGoogleMap = Completer();
   GoogleMapController? newGoogleMapController;
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  bool visible = false;
+
+  static const CameraPosition _Kuantan = CameraPosition(
     target: LatLng(3.8170687016220435, 103.33250841777334),
     zoom: 14.4746,
   );
@@ -186,36 +196,93 @@ class _MapPageState extends State<MapPage> {
                 ''');
   }
 
+  FireStoreService fireStoreService = FireStoreService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkUserRole();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        GoogleMap(
-          mapType: MapType.normal,
-          myLocationEnabled: true,
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: (GoogleMapController controller) {
-            _controllerGoogleMap.complete(controller);
-            newGoogleMapController = controller;
-            blackThemeGoogleMap();
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection("lokasi").snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData) {
+              snapshot.data!.docs.forEach((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                GeoPoint geopoint = data["loc_geo"];
+                String name = data["loc_name"];
 
-            //for black theme google  map
-          },
-        )
-      ]),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.gps_fixed,
-            size: 32,
-          ),
-          onPressed: () async {
-            // _getMyLocation();
+                var markerIdVal = document.id;
+                final MarkerId markerId = MarkerId(markerIdVal);
+                // creating a new MARKER
+                final Marker marker = Marker(
+                  markerId: markerId,
+                  position: LatLng(geopoint.latitude, geopoint.longitude),
+                  //marker window
+                  infoWindow: InfoWindow(
+                    title: name,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (c) => PlaceDetail(data: data)));
+                    },
+                  ),
+                );
+                // adding a new marker to map
+                markers[markerId] = marker;
+              });
+            }
+            return Stack(children: [
+              GoogleMap(
+                markers: Set<Marker>.of(markers.values),
+                mapType: MapType.hybrid,
+                myLocationEnabled: true,
+                myLocationButtonEnabled: true,
+                zoomControlsEnabled: true,
+                initialCameraPosition: _Kuantan,
+                onMapCreated: (GoogleMapController controller) {
+                  _controllerGoogleMap.complete(controller);
+                  newGoogleMapController = controller;
+                  blackThemeGoogleMap();
+
+                  //for black theme google  map
+                },
+              )
+            ]);
           }),
+      floatingActionButton: Visibility(
+        visible: visible,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (c) => AddLocation()));
+          },
+          label: const Text("Tambah Lokasi"),
+          icon: const Icon(Icons.add),
+          backgroundColor: Colors.orangeAccent,
+        ),
+      ),
     );
   }
 
-  // Future<void> _getMyLocation() async {
-  //   LocationData _myLocation = await LocationService().getLocation;
-  //   _animateCamera(_myLocation);
-  // }
+  checkUserRole() {
+    FirebaseFirestore.instance
+        .collection("user")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) {
+      if (value.data()!["role"].toString() == "panel") {
+        visible = true;
+      } else {
+        visible = false;
+      }
+      setState(() {});
+    });
+  }
 }

@@ -1,3 +1,5 @@
+import 'package:Jorania/screen/place.dart';
+import 'package:Jorania/services/weather_service.dart';
 import 'package:flutter/material.dart';
 import 'package:Jorania/custom/square_fav.dart';
 import 'package:Jorania/screen/place.dart';
@@ -16,31 +18,30 @@ class _FavoritePageState extends State<FavoritePage> {
     'fav 3',
     'fav 4',
     'fav 5',
-    'fav 6',
-    'fav 4',
   ];
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.orange[300],
           automaticallyImplyLeading: false,
           title: Text('Kegemaran'),
         ), // AppBar
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   itemCount: _posts.length,
                   itemBuilder: ((context, index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PlaceDetail(index)));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (c) => PlaceDetail(data:  )));
                       },
-                      child: Square(
-                        child: _posts[index],
-                      ),
+                      child: Square(),
                     );
                   })),
             )

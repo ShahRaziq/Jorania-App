@@ -49,9 +49,14 @@ class WeatherCard extends StatelessWidget {
                       height: 200.h,
                     ),
                 )
-                : Image.asset("asset/Group 3.png"),
-            right: 0,
-            top: -20,
+                : Opacity(opacity: 0.95,
+                  child: Image.asset(
+                    "asset/Group 3.png",
+                     height: 220.h,
+                    )
+                    ),
+            right: -3,
+            top: -30,
           ),
           Container(
             padding: EdgeInsets.all(20.w),

@@ -32,10 +32,11 @@ class _NavBarState extends State<NavBar> {
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
       // Got a new connectivity status!
-      if(result!=ConnectivityResult.none){
-         Navigator.push(context, MaterialPageRoute(builder: (c) => NavBar()));
-      }else{
-         Navigator.push(context, MaterialPageRoute(builder: (c) => NoConScreen()));
+      if (result != ConnectivityResult.none) {
+        Navigator.push(context, MaterialPageRoute(builder: (c) => NavBar()));
+      } else {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => NoConScreen()));
       }
     });
   }
@@ -55,7 +56,8 @@ class _NavBarState extends State<NavBar> {
           children: screens,
         ),
         bottomNavigationBar: BottomNavyBar(
-          backgroundColor: Color(0xffFE8C48), curve: Curves.linear,
+          backgroundColor: Color(0xffFE8C48),
+          curve: Curves.linear,
           //bottom nav bar
           containerHeight: 70, //container height
           selectedIndex: _selectedIndex,
@@ -70,29 +72,36 @@ class _NavBarState extends State<NavBar> {
                 size: 30,
               ),
               title: Text('  Utama'),
+              inactiveColor: Color.fromARGB(255, 99, 98, 98),
               activeColor: Color(0xff414141),
             ),
             BottomNavyBarItem(
-                icon: Icon(
-                  Icons.anchor,
-                  size: 30,
-                ),
-                title: Text('   Peta'),
-                activeColor: Color(0xff414141)),
+              icon: Icon(
+                Icons.anchor,
+                size: 30,
+              ),
+              title: Text('   Peta'),
+              inactiveColor: Color.fromARGB(255, 99, 98, 98),
+              activeColor: Color(0xff414141),
+            ),
             BottomNavyBarItem(
-                icon: Icon(
-                  Icons.star,
-                  size: 32,
-                ),
-                title: Text('Kegemaran'),
-                activeColor: Color(0xff414141)),
+              icon: Icon(
+                Icons.star,
+                size: 32,
+              ),
+              title: Text('Kegemaran'),
+              inactiveColor: Color.fromARGB(255, 99, 98, 98),
+              activeColor: Color(0xff414141),
+            ),
             BottomNavyBarItem(
-                icon: Icon(
-                  Icons.store,
-                  size: 30,
-                ),
-                title: Text('   Servis'),
-                activeColor: Color(0xff414141)),
+              icon: Icon(
+                Icons.store,
+                size: 30,
+              ),
+              title: Text('   Servis'),
+              inactiveColor: Color.fromARGB(255, 99, 98, 98),
+              activeColor: Color(0xff414141),
+            ),
           ],
         ),
       );
