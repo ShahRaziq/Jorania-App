@@ -2,19 +2,21 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:Jorania/providers/place_provider.dart';
+import 'package:Jorania/screen/list_service.dart';
+import 'package:Jorania/screen/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class AddService extends StatefulWidget {
-  const AddService({Key? key}) : super(key: key);
+class EditService extends StatefulWidget {
+  const EditService({Key? key}) : super(key: key);
 
   @override
-  State<AddService> createState() => _AddServiceState();
+  State<EditService> createState() => _EditServiceState();
 }
 
-class _AddServiceState extends State<AddService> {
+class _EditServiceState extends State<EditService> {
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
 
@@ -30,20 +32,19 @@ class _AddServiceState extends State<AddService> {
     var place = Provider.of<PlaceProvider>(context);
     place.place = widget;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        foregroundColor: Colors.grey,
+        title: Text(
+          'Kemaskini Servis Memancing',
+          style: TextStyle(
+              fontSize: 26.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.black),
+        ),
+      ),
       body: Column(children: [
-        SizedBox(
-          height: 40,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.store),
-            Text(
-              'Tambah Servis Memancing',
-              style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
         SizedBox(
           height: 10.h,
         ),
@@ -440,11 +441,8 @@ class _AddServiceState extends State<AddService> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Batal",
+                                      "Batal ",
                                       style: TextStyle(fontSize: 16.sp),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
                                     ),
                                     Icon(
                                       Icons.cancel_outlined,
@@ -468,18 +466,55 @@ class _AddServiceState extends State<AddService> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Tambah",
+                                      "Simpan ",
                                       style: TextStyle(fontSize: 16.sp),
                                     ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
                                     Icon(
-                                      Icons.add,
-                                      color: Colors.green,
+                                      Icons.save,
+                                      color: Colors.white,
                                     )
                                   ],
                                 ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                // set up the buttons
+                                Widget cancelButton = TextButton(
+                                  child: Text("Tidak"),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                );
+                                Widget continueButton = TextButton(
+                                  child: Text("Ya"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                );
+
+                                // set up the AlertDialog
+                                AlertDialog alert = AlertDialog(
+                                  title: Text("Buang Servis"),
+                                  content:
+                                      Text("Anda pasti mahu buang servis?"),
+                                  actions: [
+                                    cancelButton,
+                                    continueButton,
+                                  ],
+                                );
+
+                                // show the dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return alert;
+                                  },
+                                );
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.red,
                               ),
                             ),
                           ],

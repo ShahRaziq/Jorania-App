@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:Jorania/providers/place_provider.dart';
 import 'package:Jorania/services/firestore_service.dart';
 import 'package:Jorania/services/storage_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class AddLocation extends StatefulWidget {
   const AddLocation({Key? key}) : super(key: key);
@@ -35,6 +37,8 @@ class _AddLocationState extends State<AddLocation> {
 
   @override
   Widget build(BuildContext context) {
+    var place = Provider.of<PlaceProvider>(context);
+    place.place = widget;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,9 +227,9 @@ class _AddLocationState extends State<AddLocation> {
                               if (value!.isEmpty) {
                                 return ("Sila isi butiran ulasan");
                               }
-                              if (!regex.hasMatch(value)) {
-                                return ("masukkan minimum 10 huruf");
-                              }
+                              // if (!regex.hasMatch(value)) {
+                              //   return ("masukkan minimum 10 huruf");
+                              // }
                               return null;
                             },
                             onSaved: (value) {
@@ -273,9 +277,9 @@ class _AddLocationState extends State<AddLocation> {
                               if (value!.isEmpty) {
                                 return ("Sila isi butiran tips");
                               }
-                              if (!regex.hasMatch(value)) {
-                                return ("masukkan minimum 10 huruf");
-                              }
+                              // if (!regex.hasMatch(value)) {
+                              //   return ("masukkan minimum 10 huruf");
+                              // }
                               return null;
                             },
                             onSaved: (value) {

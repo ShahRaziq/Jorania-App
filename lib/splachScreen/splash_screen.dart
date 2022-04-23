@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Jorania/screen/login_screen.dart';
 import 'package:Jorania/screen/nav_bar.dart';
+import 'package:provider/provider.dart';
 
 class MySplashScreen extends StatefulWidget {
   const MySplashScreen({Key? key}) : super(key: key);
@@ -40,11 +41,16 @@ class _MySplashScreenState extends State<MySplashScreen> {
   void initState() {
     super.initState();
     getConnection();
+
     var subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
-      log(result.toString());
       // Got a new connectivity status!
+      if (result != ConnectivityResult.none) {
+      } else {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => NoConScreen()));
+      }
     });
     startTimer();
   }

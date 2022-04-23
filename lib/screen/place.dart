@@ -1,12 +1,18 @@
 import 'dart:developer';
 
+import 'package:Jorania/providers/place_provider.dart';
+import 'package:Jorania/screen/editLocation.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:like_button/like_button.dart';
+import 'package:map_launcher/map_launcher.dart';
+import 'package:provider/provider.dart';
 
-class PlaceDetail extends StatelessWidget {
+class PlaceDetail extends StatefulWidget {
   final Map<String, dynamic> data;
 
   PlaceDetail({
@@ -15,71 +21,87 @@ class PlaceDetail extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<PlaceDetail> createState() => _PlaceDetailState();
+}
+
+class _PlaceDetailState extends State<PlaceDetail> {
+  bool visible = false;
+  List<dynamic>? picUrl;
+  bool liked = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkUserRole();
+    picUrl = widget.data["loc_pic"];
+  }
+
+  @override
   Widget build(BuildContext context) {
-    log(data["loc_pic"].runtimeType.toString());
-    List<dynamic> picUrl = data["loc_pic"];
+    var place = Provider.of<PlaceProvider>(context);
+    place.place = widget;
     return Scaffold(
+      floatingActionButton: Visibility(
+        visible: visible,
+        child: FloatingActionButton.extended(
+          heroTag: 'kemaskini_lokasi_hero',
+          onPressed: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EditLocation(id: widget.data["id"])));
+          },
+          label: const Text("kemaskini"),
+          icon: const Icon(Icons.edit),
+          backgroundColor: Colors.orange,
+        ),
+      ),
       appBar: AppBar(
         foregroundColor: Colors.grey[700],
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      //edit
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: const Text("Sunting"),
-        icon: const Icon(Icons.edit),
-        backgroundColor: Colors.orangeAccent,
-      ),
-
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
-            Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.all(20.w),
-                  height: 250.h,
-                  width: 500.w,
-                  // color: Color.fromARGB(255, 163, 130, 130),
-                  child: CarouselSlider(
-                    options: CarouselOptions(height: 500.0),
-                    items: picUrl.map((i) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Image.network(i);
-                        },
+            Container(
+              margin: EdgeInsets.fromLTRB(10, 10, 10, 20),
+
+              // color: Color.fromARGB(255, 163, 130, 130),
+              child: CarouselSlider(
+                options: CarouselOptions(height: 250.0),
+                items: picUrl!.map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Image.network(
+                        i,
+                        fit: BoxFit.cover,
                       );
-                    }).toList(),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.orangeAccent,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(12),
-                      ),
-                      onPressed: () {},
-                      child: Icon(Icons.add_a_photo),
-                    ),
-                  ],
-                ),
-              ],
+                    },
+                  );
+                }).toList(),
+              ),
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  'Benteng Nezuko',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    widget.data["loc_name"],
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.visible,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis),
+                  ),
                 ),
-                SizedBox(
-                  width: 30.w,
-                ),
+
+                //edit button
+
+                //star button
                 Container(
                     height: 50.h,
                     decoration: BoxDecoration(
@@ -94,16 +116,38 @@ class PlaceDetail extends StatelessWidget {
                             style: TextStyle(color: Colors.white),
                           ),
                           SizedBox(width: 3.w),
-                          LikeButton(
-                            likeBuilder: (bool isLiked) {
-                              return Icon(
-                                Icons.star,
-                                size: 33.sp,
-                                color:
-                                    isLiked ? Colors.yellow : Colors.grey[400],
-                              );
-                            },
-                          ),
+                          FutureBuilder<DocumentSnapshot>(
+                              future: FirebaseFirestore.instance
+                                  .collection('user')
+                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .get(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  List<dynamic> favLocation =
+                                      snapshot.data!['favLoc'];
+
+                                  favLocation.contains(widget.data['id'])
+                                      ? liked = true
+                                      : liked = false;
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                }
+                                return LikeButton(
+                                  isLiked: liked,
+                                  onTap: onLikeButtonTapped,
+                                  likeBuilder: (bool isLiked) {
+                                    return Icon(
+                                      Icons.star,
+                                      size: 33.sp,
+                                      color: isLiked
+                                          ? Colors.yellow
+                                          : Colors.grey[400],
+                                    );
+                                  },
+                                );
+                              }),
                           SizedBox(width: 7),
                         ])),
                 SizedBox(
@@ -116,21 +160,40 @@ class PlaceDetail extends StatelessWidget {
             ),
 
             //content keterangan
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Container(
-                height: 300.h,
-                decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.all(Radius.circular(15))),
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    'Lokasi memancing yang menjadi tumpuan orang ramai terutamanya pada malam minggu. Lokasi bersih dan selesa. jhsajdhskajdhkjshdjkashdkjhsjd jdhkajshdkja joirejvcvbn fjoiwjeofinsccv nihwihgohdjsnfjsnjhnfew./?fsjfoihwfuif',
-                    style: TextStyle(),
+            Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Container(
+                    height: 300.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        widget.data["loc_desc"],
+                        style: TextStyle(),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.orangeAccent,
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(1),
+                      ),
+                      onPressed: () {},
+                      child: Icon(Icons.edit),
+                    ),
+                  ],
+                ),
+              ],
             ),
             //header tips
             Row(
@@ -146,20 +209,39 @@ class PlaceDetail extends StatelessWidget {
               ],
             ),
             //content tips
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.all(Radius.circular(15))),
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    'Lokasi memancing yang menjadi tumpuan orang ramai terutamanya pada malam minggu. Lokasi bersih dan selesa. jhsajdhskajdhkjshdjkashdkjhsjd jdhkajshdkja joirejvcvbn fjoiwjeofinsccv nihwihgohdjsnfjsnjhnfew./?fsjfoihwfuif',
-                    style: TextStyle(),
+            Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        widget.data["loc_tips"],
+                        style: TextStyle(),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.orangeAccent,
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(1),
+                      ),
+                      onPressed: () {},
+                      child: Icon(Icons.edit),
+                    ),
+                  ],
+                ),
+              ],
             ),
             SizedBox(height: 20.h),
             //button GPS
@@ -172,7 +254,19 @@ class PlaceDetail extends StatelessWidget {
                         primary: Colors.deepOrange[300],
                         shape: RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(13))),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (await MapLauncher.isMapAvailable(MapType.google) !=
+                          null) {
+                        await MapLauncher.showMarker(
+                          mapType: MapType.google,
+                          coords: Coords(
+                              (widget.data['loc_geo'] as GeoPoint).latitude,
+                              (widget.data['loc_geo'] as GeoPoint).longitude),
+                          title: widget.data['loc_name'],
+                          description: widget.data['loc_desc'],
+                        );
+                      }
+                    },
                     child: Row(
                       children: [
                         Icon(
@@ -200,5 +294,40 @@ class PlaceDetail extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> onLikeButtonTapped(bool isLiked) async {
+    var data = await FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    log(data.toString());
+    List<dynamic> favoriteLocation = data['favLoc'];
+    if (isLiked) {
+      favoriteLocation.remove(widget.data['id']);
+    } else {
+      favoriteLocation.add(widget.data['id']);
+    }
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({'favLoc': favoriteLocation});
+
+    return !isLiked;
+  }
+
+  checkUserRole() {
+    FirebaseFirestore.instance
+        .collection("user")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) {
+      if (value.data()!["role"].toString() == "panel") {
+        visible = true;
+      } else {
+        visible = false;
+      }
+      setState(() {});
+    });
   }
 }

@@ -15,6 +15,7 @@ class FireStoreService {
         "userid": userid,
         "name": name,
         "role": role,
+        "favLoc": []
       });
     } catch (e) {
       log(e.toString());
@@ -39,5 +40,21 @@ class FireStoreService {
       "loc_pic": pic,
       "loc_tips": tips
     });
+  }
+
+  Future<void> updateLocationData(
+      String desc, String name, String tips, String id, pics) async {
+    await _firebaseFirestore.collection("lokasi").doc(id).update({
+      "loc_desc": desc,
+      "loc_name": name,
+      "loc_tips": tips,
+      "loc_pic": pics
+    });
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getdataLocation(
+      String id) async {
+    var data = await _firebaseFirestore.collection("lokasi").doc(id).get();
+    return data;
   }
 }

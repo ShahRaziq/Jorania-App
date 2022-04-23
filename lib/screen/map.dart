@@ -10,6 +10,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/place_provider.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -213,11 +216,15 @@ class _MapPageState extends State<MapPage> {
           stream: FirebaseFirestore.instance.collection("lokasi").snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
+              markers = {};
               snapshot.data!.docs.forEach((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
                 GeoPoint geopoint = data["loc_geo"];
+
                 String name = data["loc_name"];
+
+                data.addAll({'id': document.id});
 
                 var markerIdVal = document.id;
                 final MarkerId markerId = MarkerId(markerIdVal);
@@ -234,14 +241,16 @@ class _MapPageState extends State<MapPage> {
                     },
                   ),
                 );
+
                 // adding a new marker to map
+
                 markers[markerId] = marker;
               });
             }
             return Stack(children: [
               GoogleMap(
                 markers: Set<Marker>.of(markers.values),
-                mapType: MapType.hybrid,
+                mapType: MapType.terrain,
                 myLocationEnabled: true,
                 myLocationButtonEnabled: true,
                 zoomControlsEnabled: true,

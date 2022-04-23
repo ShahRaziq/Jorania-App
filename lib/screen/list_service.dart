@@ -1,10 +1,10 @@
 import 'dart:developer';
 
+import 'package:Jorania/screen/addService.dart';
 import 'package:Jorania/screen/service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:riverpod/riverpod.dart';
 
 class ListServicePage extends StatefulWidget {
   const ListServicePage({Key? key}) : super(key: key);
@@ -16,7 +16,6 @@ class ListServicePage extends StatefulWidget {
 class _ListServicePageState extends State<ListServicePage> {
   List<String> service = [
     'Cod Umpan hidup',
-    'COD udang',
     'Cod umpan dedak',
     'Umpan ikan ptong',
     'Sewaan rumah bot',
@@ -29,8 +28,11 @@ class _ListServicePageState extends State<ListServicePage> {
       //Floating action button sunting
       floatingActionButton: FloatingActionButton.extended(
         heroTag: 'servis_hero',
-        onPressed: () {},
-        label: const Text("servis "),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddService()));
+        },
+        label: const Text("servis"),
         icon: const Icon(Icons.add),
         backgroundColor: Color.fromARGB(255, 150, 100, 35),
       ),
@@ -82,38 +84,31 @@ class _ListServicePageState extends State<ListServicePage> {
                     margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
                     height: 100,
                     decoration: BoxDecoration(
-                        color: Colors.orangeAccent,
+                        color: Color.fromARGB(255, 216, 192, 161),
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: 30,
+                          width: 50.w,
                         ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(8, 10, 15, 5),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      service[index],
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ]),
+                            Text(
+                              service[index],
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(8, 10, 15, 5),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(Icons.access_alarm),
-                                    Text('8:00 am - 10:00 pm'),
-                                  ]),
-                            ),
+                            Row(children: [
+                              Icon(Icons.calendar_month_rounded),
+                              Text(' Isnin-Ahad'),
+                            ]),
+                            Row(children: [
+                              Icon(Icons.access_alarm),
+                              Text('8:00 am - 10:00 pm'),
+                            ]),
                           ],
                         ),
                       ],

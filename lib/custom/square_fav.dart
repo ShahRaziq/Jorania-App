@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Square extends StatelessWidget {
+class Square extends StatefulWidget {
+  final String name;
+  final String imageURL;
+  Square(this.name, this.imageURL);
+
+  @override
+  State<Square> createState() => _SquareState();
+}
+
+class _SquareState extends State<Square> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,11 +23,11 @@ class Square extends StatelessWidget {
               alignment: AlignmentDirectional.bottomCenter,
               children: [
                 ClipRRect(
-                  child: Image.asset(
-                    "asset/benteng.jpg",
+                  child: Image.network(
+                    widget.imageURL,
                     width: 400.w,
                     height: 300.h,
-                    fit: BoxFit.contain,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Padding(
@@ -31,7 +40,7 @@ class Square extends StatelessWidget {
                       child: Padding(
                           padding: EdgeInsets.all(12),
                           child: Text(
-                            'Benteng Esplande',
+                            widget.name,
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ))),

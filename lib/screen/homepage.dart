@@ -33,20 +33,6 @@ class _HomePageState extends State<HomePage> {
   List<Placemark>? placemarks;
   Map<String, Map<String, String>>? airPasang;
 
-  final screens = [
-    Center(
-      child: Text('Home', style: TextStyle(fontSize: 60)),
-    ),
-    Center(
-      child: Text('Home', style: TextStyle(fontSize: 60)),
-    ),
-    Center(
-      child: Text('Home', style: TextStyle(fontSize: 60)),
-    ),
-    Center(
-      child: Text('Home', style: TextStyle(fontSize: 60)),
-    ),
-  ];
   String text = "";
 
   String username = "";
@@ -84,7 +70,7 @@ class _HomePageState extends State<HomePage> {
           iconTheme: IconThemeData(color: Colors.transparent),
           title: Text(
             "",
-            style: TextStyle(fontSize: 30, color: Colors.white),
+            style: TextStyle(fontSize: 30, color: Colors.transparent),
           ),
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
@@ -139,7 +125,7 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.all(25.0),
+            padding: const EdgeInsets.all(20.0),
             child: SizedBox(
               width: double.infinity,
               child: Column(
@@ -182,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    color: Color.fromARGB(241, 226, 196, 201),
+                    color: Color.fromARGB(240, 216, 109, 60),
                     child: InkWell(
                       splashColor:
                           Color.fromARGB(255, 131, 173, 163).withAlpha(50),
@@ -281,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    color: Color.fromARGB(255, 232, 159, 245),
+                    color: Color.fromARGB(255, 24, 120, 175),
                     child: InkWell(
                       splashColor:
                           Color.fromARGB(255, 131, 173, 163).withAlpha(50),
@@ -342,11 +328,12 @@ class _HomePageState extends State<HomePage> {
       WeatherModel weatherModel = weatherModelFromJson(response.body);
       print(response.body);
       print(weatherModel.data!.current!.weather!.tp);
-
-      setState(() {
-        temp = weatherModel.data!.current!.weather!.tp!;
-        icon = weatherModel.data!.current!.weather!.ic!;
-      });
+      if (mounted) {
+        setState(() {
+          temp = weatherModel.data!.current!.weather!.tp!;
+          icon = weatherModel.data!.current!.weather!.ic!;
+        });
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
