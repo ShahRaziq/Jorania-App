@@ -2,7 +2,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:Jorania/providers/place_provider.dart';
+import 'package:Jorania/services/firestore_service.dart';
+import 'package:Jorania/services/storage_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -17,13 +20,15 @@ class AddService extends StatefulWidget {
 class _AddServiceState extends State<AddService> {
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
+  StorageServices storageServices = StorageServices();
+  FireStoreService fireStoreService = FireStoreService();
 
-  final nameController = new TextEditingController();
-  final hariController = new TextEditingController();
-  final waktuController = new TextEditingController();
-  final detailController = new TextEditingController();
-  final operasiController = new TextEditingController();
-  final telefonController = new TextEditingController();
+  final nameController = TextEditingController();
+  final hariController = TextEditingController();
+  final waktuController = TextEditingController();
+  final detailController = TextEditingController();
+  final operasiController = TextEditingController();
+  final telefonController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +36,13 @@ class _AddServiceState extends State<AddService> {
     place.place = widget;
     return Scaffold(
       body: Column(children: [
-        SizedBox(
+        const SizedBox(
           height: 40,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.store),
+            const Icon(Icons.store),
             Text(
               'Tambah Servis Memancing',
               style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
@@ -49,7 +54,7 @@ class _AddServiceState extends State<AddService> {
         ),
         Expanded(
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Container(
               margin: EdgeInsets.all(20.w),
               width: double.infinity,
@@ -77,7 +82,7 @@ class _AddServiceState extends State<AddService> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //upload image
-                        imageFileList!.length != 0
+                        imageFileList!.isNotEmpty
                             ? SizedBox(
                                 width: double.infinity,
                                 height: 200,
@@ -102,11 +107,11 @@ class _AddServiceState extends State<AddService> {
                                               setState(() {});
                                             },
                                             child: Container(
-                                              padding: EdgeInsets.all(5),
-                                              decoration: BoxDecoration(
+                                              padding: const EdgeInsets.all(5),
+                                              decoration: const BoxDecoration(
                                                   shape: BoxShape.circle,
                                                   color: Colors.red),
-                                              child: Icon(
+                                              child: const Icon(
                                                 Icons.delete,
                                                 color: Colors.white,
                                               ),
@@ -118,30 +123,30 @@ class _AddServiceState extends State<AddService> {
                                   },
                                   separatorBuilder:
                                       (BuildContext context, int index) {
-                                    return SizedBox(
+                                    return const SizedBox(
                                       width: 10,
                                     );
                                   },
                                 ),
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                minimumSize: Size(double.infinity, 40),
+                                minimumSize: const Size(double.infinity, 40),
                                 primary: Colors.orange),
                             onPressed: () {
                               selectImages();
                             },
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Text("MUAT NAIK GAMBAR"),
                                   SizedBox(
                                     width: 30,
                                   ),
                                   Icon(Icons.add_photo_alternate)
                                 ])),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         //NAMA LOKASI
@@ -157,21 +162,21 @@ class _AddServiceState extends State<AddService> {
                             SizedBox(
                               width: 5.w,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.store,
                               color: Colors.black54,
                             ),
                           ],
                         ),
-                        SizedBox(height: 3),
+                        const SizedBox(height: 3),
                         TextFormField(
-                          controller: operasiController,
+                          controller: nameController,
                           autofocus: false,
                           cursorColor: Colors.white,
                           keyboardType: TextInputType.name,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
-                            RegExp regex = new RegExp(r'^.{5,}$');
+                            RegExp regex = RegExp(r'^.{5,}$');
                             if (value!.isEmpty) {
                               return ("Sila isi butiran nama servis");
                             }
@@ -185,13 +190,14 @@ class _AddServiceState extends State<AddService> {
                           },
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(20, 15, 20, 15),
                             labelText: '',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         //hari operasi
                         Row(
                           children: [
@@ -205,7 +211,7 @@ class _AddServiceState extends State<AddService> {
                             SizedBox(
                               width: 5.w,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.calendar_month_rounded,
                               color: Colors.black54,
                             ),
@@ -221,7 +227,7 @@ class _AddServiceState extends State<AddService> {
                             )
                           ],
                         ),
-                        SizedBox(height: 3),
+                        const SizedBox(height: 3),
                         TextFormField(
                           controller: hariController,
                           autofocus: false,
@@ -229,7 +235,7 @@ class _AddServiceState extends State<AddService> {
                           keyboardType: TextInputType.name,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
-                            RegExp regex = new RegExp(r'^.{5,}$');
+                            RegExp regex = RegExp(r'^.{5,}$');
                             if (value!.isEmpty) {
                               return ("Sila isi butiran hari operasi");
                             }
@@ -239,17 +245,18 @@ class _AddServiceState extends State<AddService> {
                             return null;
                           },
                           onSaved: (value) {
-                            nameController.text = value!;
+                            hariController.text = value!;
                           },
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(20, 15, 20, 15),
                             labelText: '',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         //waktu operasi
                         Row(
                           children: [
@@ -263,7 +270,7 @@ class _AddServiceState extends State<AddService> {
                             SizedBox(
                               width: 5.w,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.alarm,
                               color: Colors.black54,
                             ),
@@ -279,7 +286,7 @@ class _AddServiceState extends State<AddService> {
                             )
                           ],
                         ),
-                        SizedBox(height: 3),
+                        const SizedBox(height: 3),
                         TextFormField(
                           controller: waktuController,
                           autofocus: false,
@@ -287,7 +294,7 @@ class _AddServiceState extends State<AddService> {
                           keyboardType: TextInputType.name,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
-                            RegExp regex = new RegExp(r'^.{5,}$');
+                            RegExp regex = RegExp(r'^.{5,}$');
                             if (value!.isEmpty) {
                               return ("Sila isi butiran waktu operasi");
                             }
@@ -297,11 +304,12 @@ class _AddServiceState extends State<AddService> {
                             return null;
                           },
                           onSaved: (value) {
-                            nameController.text = value!;
+                            waktuController.text = value!;
                           },
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(20, 15, 20, 15),
                             labelText: '',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
@@ -323,7 +331,7 @@ class _AddServiceState extends State<AddService> {
                             SizedBox(
                               width: 5.w,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.whatsapp,
                               color: Colors.black54,
                             ),
@@ -339,7 +347,7 @@ class _AddServiceState extends State<AddService> {
                             )
                           ],
                         ),
-                        SizedBox(height: 3),
+                        const SizedBox(height: 3),
                         TextFormField(
                           controller: telefonController,
                           autofocus: false,
@@ -348,7 +356,7 @@ class _AddServiceState extends State<AddService> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             RegExp regex =
-                                new RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
+                                RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
                             if (value!.isEmpty) {
                               return ("Sila isi butiran no. telefon");
                             }
@@ -358,11 +366,12 @@ class _AddServiceState extends State<AddService> {
                             return null;
                           },
                           onSaved: (value) {
-                            nameController.text = value!;
+                            telefonController.text = value!;
                           },
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(20, 15, 20, 15),
                             labelText: '',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
@@ -384,7 +393,7 @@ class _AddServiceState extends State<AddService> {
                             SizedBox(
                               width: 5.w,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.draw_rounded,
                               color: Colors.black54,
                             ),
@@ -399,29 +408,29 @@ class _AddServiceState extends State<AddService> {
                           keyboardType: TextInputType.multiline,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
-                            RegExp regex = new RegExp(r'^.{10,}$');
                             if (value!.isEmpty) {
                               return ("Sila isi butiran keterangan");
                             }
-                            if (!regex.hasMatch(value)) {
-                              return ("masukkan minimum 10 huruf");
-                            }
+                            // if (!regex.hasMatch(value)) {
+                            //   return ("masukkan minimum 10 huruf");
+                            // }
                             return null;
                           },
                           onSaved: (value) {
-                            nameController.text = value!;
+                            detailController.text = value!;
                           },
                           textInputAction: TextInputAction.newline,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(20, 15, 20, 15),
                             labelText: '',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
 
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         //TIPS
 
                         SizedBox(height: 10.h),
@@ -446,7 +455,7 @@ class _AddServiceState extends State<AddService> {
                                     SizedBox(
                                       width: 20.w,
                                     ),
-                                    Icon(
+                                    const Icon(
                                       Icons.cancel_outlined,
                                       color: Colors.red,
                                     )
@@ -462,7 +471,7 @@ class _AddServiceState extends State<AddService> {
                                 style: ElevatedButton.styleFrom(
                                     primary: Colors.orange),
                                 onPressed: () {
-                                  // addLocation();
+                                  AddService();
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -474,8 +483,8 @@ class _AddServiceState extends State<AddService> {
                                     SizedBox(
                                       width: 20.w,
                                     ),
-                                    Icon(
-                                      Icons.add,
+                                    const Icon(
+                                      Icons.add_circle_outline,
                                       color: Colors.green,
                                     )
                                   ],
@@ -494,6 +503,34 @@ class _AddServiceState extends State<AddService> {
         )
       ]),
     );
+  }
+
+  void AddService() async {
+    EasyLoading.show(status: 'sedang diproses...');
+
+    List<String> picUrl = await uploadImage();
+
+    await fireStoreService.uploadServiceData(
+        nameController.text,
+        hariController.text,
+        waktuController.text,
+        telefonController.text,
+        detailController.text,
+        picUrl);
+    EasyLoading.showSuccess('Servis berjaya ditambah!');
+    Navigator.of(context).pop();
+  }
+
+  Future uploadImage() async {
+    List<String> picUrl = [];
+    for (int i = 0; i <= imageFileList!.length; i++) {
+      if (i == imageFileList!.length) {
+        return picUrl;
+      }
+      String url = await storageServices.uploadFile(
+          "service/${imageFileList![i].name}", File(imageFileList![i].path));
+      picUrl.add(url);
+    }
   }
 
   void selectImages() async {

@@ -38,10 +38,10 @@ class _EditLocationState extends State<EditLocation> {
   //default role =user
 
   //editting Controller
-  final nameController = new TextEditingController();
-  final detailController = new TextEditingController();
-  final tipsController = new TextEditingController();
-  final typeController = new TextEditingController();
+  final nameController = TextEditingController();
+  final detailController = TextEditingController();
+  final tipsController = TextEditingController();
+  final typeController = TextEditingController();
 
   @override
   void initState() {
@@ -79,16 +79,16 @@ class _EditLocationState extends State<EditLocation> {
         ),
       ),
       body: loading
-          ? CircularProgressIndicator()
+          ? const CircularProgressIndicator()
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 1,
                 ),
                 Expanded(
                   child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     child: Container(
                       margin: EdgeInsets.all(20.w),
                       width: double.infinity,
@@ -116,7 +116,7 @@ class _EditLocationState extends State<EditLocation> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //upload image
-                                imageNetworkList!.length != 0
+                                imageNetworkList!.isNotEmpty
                                     ? SizedBox(
                                         width: double.infinity,
                                         height: 200.h,
@@ -143,12 +143,15 @@ class _EditLocationState extends State<EditLocation> {
                                                     },
                                                     child: Container(
                                                       padding:
-                                                          EdgeInsets.all(5),
-                                                      decoration: BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: Colors.red),
-                                                      child: Icon(
+                                                          const EdgeInsets.all(
+                                                              5),
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color:
+                                                                  Colors.red),
+                                                      child: const Icon(
                                                         Icons.delete,
                                                         color: Colors.white,
                                                       ),
@@ -161,21 +164,21 @@ class _EditLocationState extends State<EditLocation> {
                                           separatorBuilder:
                                               (BuildContext context,
                                                   int index) {
-                                            return SizedBox(
+                                            return const SizedBox(
                                               width: 10,
                                             );
                                           },
                                         ),
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                                 SizedBox(
                                   height: 10.h,
                                 ),
-                                imageFileList!.length == 0
+                                imageFileList!.isEmpty
                                     ? ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                             minimumSize:
-                                                Size(double.infinity, 40),
+                                                const Size(double.infinity, 40),
                                             primary: Colors.orange),
                                         onPressed: () {
                                           selectImages();
@@ -183,7 +186,7 @@ class _EditLocationState extends State<EditLocation> {
                                         child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
-                                            children: [
+                                            children: const [
                                               Text("MUAT NAIK GAMBAR"),
                                               SizedBox(
                                                 width: 30,
@@ -214,14 +217,15 @@ class _EditLocationState extends State<EditLocation> {
                                                       },
                                                       child: Container(
                                                         padding:
-                                                            EdgeInsets.all(5),
+                                                            const EdgeInsets
+                                                                .all(5),
                                                         decoration:
-                                                            BoxDecoration(
+                                                            const BoxDecoration(
                                                                 shape: BoxShape
                                                                     .circle,
                                                                 color:
                                                                     Colors.red),
-                                                        child: Icon(
+                                                        child: const Icon(
                                                           Icons.delete,
                                                           color: Colors.white,
                                                         ),
@@ -233,7 +237,7 @@ class _EditLocationState extends State<EditLocation> {
                                             })),
                                       ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 10.h,
                                 ),
                                 //NAMA LOKASI
                                 Row(
@@ -245,13 +249,13 @@ class _EditLocationState extends State<EditLocation> {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black54),
                                     ),
-                                    Icon(
+                                    const Icon(
                                       Icons.place,
                                       color: Colors.black54,
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 3),
+                                const SizedBox(height: 3),
                                 TextFormField(
                                   controller: nameController,
                                   autofocus: false,
@@ -260,7 +264,7 @@ class _EditLocationState extends State<EditLocation> {
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   validator: (value) {
-                                    RegExp regex = new RegExp(r'^.{5,}$');
+                                    RegExp regex = RegExp(r'^.{5,}$');
                                     if (value!.isEmpty) {
                                       return ("Sila isi butiran nama lokasi");
                                     }
@@ -274,15 +278,15 @@ class _EditLocationState extends State<EditLocation> {
                                   },
                                   textInputAction: TextInputAction.next,
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        20, 15, 20, 15),
                                     labelText: '',
                                     border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                   ),
                                 ),
-                                SizedBox(height: 15),
+                                const SizedBox(height: 15),
                                 //ULASAN
                                 Row(
                                   children: [
@@ -293,7 +297,7 @@ class _EditLocationState extends State<EditLocation> {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black54),
                                     ),
-                                    Icon(
+                                    const Icon(
                                       Icons.draw_rounded,
                                       color: Colors.black54,
                                     ),
@@ -309,7 +313,7 @@ class _EditLocationState extends State<EditLocation> {
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   validator: (value) {
-                                    RegExp regex = new RegExp(r'^.{10,}$');
+                                    RegExp regex = RegExp(r'^.{10,}$');
                                     if (value!.isEmpty) {
                                       return ("Sila isi butiran ulasan");
                                     }
@@ -323,17 +327,17 @@ class _EditLocationState extends State<EditLocation> {
                                   },
                                   textInputAction: TextInputAction.newline,
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        20, 15, 20, 15),
                                     labelText: '',
                                     border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                   ),
                                 ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
 
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 //TIPS
                                 Row(
                                   children: [
@@ -344,7 +348,7 @@ class _EditLocationState extends State<EditLocation> {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black54),
                                     ),
-                                    Icon(
+                                    const Icon(
                                       Icons.draw_rounded,
                                       color: Colors.black54,
                                     ),
@@ -360,7 +364,7 @@ class _EditLocationState extends State<EditLocation> {
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   validator: (value) {
-                                    RegExp regex = new RegExp(r'^.{10,}$');
+                                    RegExp regex = RegExp(r'^.{10,}$');
                                     if (value!.isEmpty) {
                                       return ("Sila isi butiran tips");
                                     }
@@ -374,8 +378,8 @@ class _EditLocationState extends State<EditLocation> {
                                   },
                                   textInputAction: TextInputAction.newline,
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        20, 15, 20, 15),
                                     labelText: '',
                                     border: OutlineInputBorder(
                                         borderRadius:
@@ -403,7 +407,7 @@ class _EditLocationState extends State<EditLocation> {
                                               "Batal ",
                                               style: TextStyle(fontSize: 16.sp),
                                             ),
-                                            Icon(
+                                            const Icon(
                                               Icons.cancel_outlined,
                                               color: Colors.red,
                                             )
@@ -455,7 +459,7 @@ class _EditLocationState extends State<EditLocation> {
                                               "Simpan ",
                                               style: TextStyle(fontSize: 16.sp),
                                             ),
-                                            Icon(
+                                            const Icon(
                                               Icons.save,
                                               color: Colors.white,
                                             )
@@ -467,13 +471,13 @@ class _EditLocationState extends State<EditLocation> {
                                       onPressed: () {
                                         // set up the buttons
                                         Widget cancelButton = TextButton(
-                                          child: Text("Tidak"),
+                                          child: const Text("Tidak"),
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
                                         );
                                         Widget continueButton = TextButton(
-                                          child: Text("Ya"),
+                                          child: const Text("Ya"),
                                           onPressed: () {
                                             FirebaseFirestore.instance
                                                 .collection("lokasi")
@@ -487,8 +491,8 @@ class _EditLocationState extends State<EditLocation> {
 
                                         // set up the AlertDialog
                                         AlertDialog alert = AlertDialog(
-                                          title: Text("Buang Lokasi"),
-                                          content: Text(
+                                          title: const Text("Buang Lokasi"),
+                                          content: const Text(
                                               "Anda pasti mahu buang lokasi ini?"),
                                           actions: [
                                             cancelButton,
@@ -504,7 +508,7 @@ class _EditLocationState extends State<EditLocation> {
                                           },
                                         );
                                       },
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.delete,
                                         color: Colors.red,
                                       ),
@@ -523,14 +527,6 @@ class _EditLocationState extends State<EditLocation> {
             ),
     );
   }
-
-  // Future<void> updateLocationData(String desc, String name, String tips) async {
-  //   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  //   await _firebaseFirestore
-  //       .collection("lokasi")
-  //       .doc()
-  //       .update({"loc_desc": desc, "loc_name": name, "loc_tips": tips});
-  // }
 
   Future uploadImage() async {
     for (int i = 0; i <= imageFileList!.length; i++) {
@@ -552,31 +548,4 @@ class _EditLocationState extends State<EditLocation> {
     print("Image List Length:" + imageFileList!.length.toString());
     setState(() {});
   }
-
-  // Future _determinePosition() async {
-  //   bool serviceEnabled;
-  //   LocationPermission permission;
-
-  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  //   if (!serviceEnabled) {
-  //     return Future.error('Location services are disabled.');
-  //   }
-
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       return Future.error('Location permissions are denied');
-  //     }
-  //   }
-
-  //   if (permission == LocationPermission.deniedForever) {
-  //     // Permissions are denied forever, handle appropriately.
-  //     return Future.error(
-  //         'Location permissions are permanently denied, we cannot request permissions.');
-  //   }
-  //   return await Geolocator.getCurrentPosition(
-  //       desiredAccuracy: LocationAccuracy.best,
-  //       forceAndroidLocationManager: true);
-  // }
 }

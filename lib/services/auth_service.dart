@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
   //log in
   String error = "";
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<UserCredential?> signIn(String email, String password) async {
     UserCredential? user;
@@ -29,16 +29,15 @@ class AuthService {
     }
     return user;
   }
-  
-   Future<String> signUp(String email, String password) async {
-   
+
+  Future<String> signUp(String email, String password) async {
     try {
-     await _firebaseAuth.createUserWithEmailAndPassword(
+      await _firebaseAuth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
     } on FirebaseAuthException catch (e) {
-      error= e.message!;
+      error = e.message!;
 
       if (e.code == "invalid-email") {
         error = 'Emel tidak sah. Sila masukkan emel yang sah!';
@@ -46,10 +45,10 @@ class AuthService {
         error = 'Emel belum didaftar!';
       } else if (e.code == "wrong-password") {
         error = 'Kata laluan salah!';
-      } else if (e.code == "email-already-in-use"){
+      } else if (e.code == "email-already-in-use") {
         error = "Emel ini sudah digunakan";
-      }else {
-        error= "Masalah dijumpai";
+      } else {
+        error = "Sila isi semua butiran dengan betul!";
       }
       log(e.code);
     } catch (e) {
@@ -57,6 +56,4 @@ class AuthService {
     }
     return error;
   }
-
-
 }

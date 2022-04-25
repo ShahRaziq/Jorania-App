@@ -1,78 +1,85 @@
 import 'package:Jorania/providers/place_provider.dart';
 import 'package:Jorania/screen/editService.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ServiceDetail extends StatefulWidget {
+  final Map<String, dynamic> data;
+
+  const ServiceDetail({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
   @override
   State<ServiceDetail> createState() => _ServiceDetailState();
 }
 
 class _ServiceDetailState extends State<ServiceDetail> {
+  bool visible = false;
+  List<dynamic>? picUrl;
+  bool liked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkUserRole();
+    picUrl = widget.data["ser_pic"];
+  }
+
   @override
   Widget build(BuildContext context) {
     var place = Provider.of<PlaceProvider>(context);
     place.place = widget;
-    final picUrl = [
-      'https://images.unsplash.com/photo-1510525009512-ad7fc13eefab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-      'https://images.unsplash.com/photo-1598597285544-73cde918c78d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=728&q=80',
-      'https://www.dnamelangkawi.com/v1/images/blog/image5b.jpg',
-    ];
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        heroTag: 'sunting_hero',
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => EditService()));
-        },
-        label: const Text("kemaskini"),
-        icon: const Icon(Icons.edit),
-        backgroundColor: Colors.orange,
+      floatingActionButton: Visibility(
+        visible: visible,
+        child: FloatingActionButton.extended(
+          heroTag: 'sunting_hero',
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EditService(id: widget.data["id"])));
+          },
+          label: const Text("kemaskini"),
+          icon: const Icon(Icons.edit),
+          backgroundColor: Colors.orange,
+        ),
       ),
       appBar: AppBar(
         backgroundColor: Colors.orange[300],
-        title: Text('Servis '),
+        title: const Text('Servis '),
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             SizedBox(
               height: 10.h,
             ),
-            Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.all(20.w),
-                  // color: Color.fromARGB(255, 163, 130, 130),
-                  child: CarouselSlider.builder(
-                    options: CarouselOptions(height: 255.0),
-                    itemCount: picUrl.length,
-                    itemBuilder: (context, index, realIndex) {
-                      final picurl = picUrl[index];
-
-                      return buildImage(picurl, index);
+            Container(
+              margin: EdgeInsets.all(20.w),
+              // color: Color.fromARGB(255, 163, 130, 130),
+              child: CarouselSlider(
+                options: CarouselOptions(height: 255.0),
+                items: picUrl!.map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Image.network(
+                        i,
+                        fit: BoxFit.cover,
+                      );
                     },
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.orangeAccent,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(12),
-                      ),
-                      onPressed: () {},
-                      child: Icon(Icons.add_a_photo),
-                    ),
-                  ],
-                ),
-              ],
+                  );
+                }).toList(),
+              ),
             ),
 
             Row(
@@ -80,7 +87,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
               children: [
                 Container(
                   child: Text(
-                    'Kapal Sewa Nezukodse',
+                    widget.data["ser_name"],
                     style:
                         TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
                   ),
@@ -91,24 +98,25 @@ class _ServiceDetailState extends State<ServiceDetail> {
               height: 5.h,
             ),
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Container(
                 height: 300.h,
+                width: double.infinity,
                 decoration: BoxDecoration(
                     color: Colors.grey[200],
-                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                    borderRadius: const BorderRadius.all(Radius.circular(15))),
                 child: Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Text(
-                    'Lokasi memancing yang menjadi tumpuan orang ramai terutamanya pada malam minggu. Lokasi bersih dan selesa. jhsajdhskajdhkjshdjkashdkjhsjd jdhkajshdkja joirejvcvbn fjoiwjeofinsccv nihwihgohdjsnfjsnjhnfew./?fsjfoihwfuif',
-                    style: TextStyle(),
+                    widget.data["ser_desc"],
+                    style: const TextStyle(),
                   ),
                 ),
               ),
             ),
 
             Padding(
-              padding: EdgeInsets.fromLTRB(20, 1, 1, 1),
+              padding: const EdgeInsets.fromLTRB(20, 1, 1, 1),
               child: Row(children: [
                 Text(
                   'Info servis',
@@ -119,76 +127,59 @@ class _ServiceDetailState extends State<ServiceDetail> {
             ),
 
             //content keterangan
-            Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Container(
-                    height: 160.h,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                height: 160.h,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: const BorderRadius.all(Radius.circular(15))),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Row(
                         children: [
-                          Row(
-                            children: [
-                              Icon(Icons.calendar_month_rounded),
-                              SizedBox(width: 5.w),
-                              Text(
-                                'Isnin-Jumaat',
-                                style: TextStyle(),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.alarm),
-                              SizedBox(width: 5.w),
-                              Text(
-                                '8:00pg-10:30mlm',
-                                style: TextStyle(),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.phone),
-                              SizedBox(width: 5.w),
-                              Text(
-                                '0166754876',
-                                style: TextStyle(),
-                              ),
-                            ],
+                          const Icon(Icons.calendar_month_rounded),
+                          SizedBox(width: 5.w),
+                          Text(
+                            widget.data["ser_hari"],
+                            style: const TextStyle(),
                           ),
                         ],
                       ),
-                    ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.alarm),
+                          SizedBox(width: 5.w),
+                          Text(
+                            widget.data["ser_waktu"],
+                            style: const TextStyle(),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.phone),
+                          SizedBox(width: 5.w),
+                          Text(
+                            widget.data["ser_tel"],
+                            style: const TextStyle(),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.orangeAccent,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(1),
-                      ),
-                      onPressed: () {},
-                      child: Icon(Icons.edit),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
+
             //header tips
 
             //content tips
@@ -200,11 +191,13 @@ class _ServiceDetailState extends State<ServiceDetail> {
               children: [
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        minimumSize: Size(50, 50),
+                        minimumSize: const Size(50, 50),
                         primary: Colors.deepOrange[300],
                         shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(13))),
-                    onPressed: () {},
+                            borderRadius: BorderRadius.circular(13))),
+                    onPressed: () {
+                      _launchUrl();
+                    },
                     child: Row(
                       children: [
                         Icon(
@@ -212,7 +205,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                           color: Colors.green[400],
                           size: 35,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
@@ -226,7 +219,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
                     )),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             )
           ],
@@ -235,12 +228,25 @@ class _ServiceDetailState extends State<ServiceDetail> {
     );
   }
 
-  Widget buildImage(String picurl, int index) => Container(
-        // margin: EdgeInsets.symmetric(horizontal: 19),
-        color: Colors.grey,
-        child: Image.network(
-          picurl,
-          fit: BoxFit.cover,
-        ),
-      );
+  checkUserRole() {
+    FirebaseFirestore.instance
+        .collection("user")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) {
+      if (value.data()!["role"].toString() == "panel") {
+        visible = true;
+      } else {
+        visible = false;
+      }
+      setState(() {});
+    });
+  }
+
+  void _launchUrl() async {
+    if (!await launch(
+        "https://wa.me/+6'${widget.data["ser_tel"]}'?text=Jorania%3E%20adakah%20servis%20masih%20tersedia%3F%0A")) {
+      throw 'Could not launch ';
+    }
+  }
 }

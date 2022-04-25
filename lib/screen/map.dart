@@ -10,9 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/place_provider.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -210,71 +207,73 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection("lokasi").snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasData) {
-              markers = {};
-              snapshot.data!.docs.forEach((DocumentSnapshot document) {
-                Map<String, dynamic> data =
-                    document.data()! as Map<String, dynamic>;
-                GeoPoint geopoint = data["loc_geo"];
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        body: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection("lokasi").snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasData) {
+                markers = {};
+                for (var document in snapshot.data!.docs) {
+                  Map<String, dynamic> data =
+                      document.data()! as Map<String, dynamic>;
+                  GeoPoint geopoint = data["loc_geo"];
 
-                String name = data["loc_name"];
+                  String name = data["loc_name"];
 
-                data.addAll({'id': document.id});
+                  data.addAll({'id': document.id});
 
-                var markerIdVal = document.id;
-                final MarkerId markerId = MarkerId(markerIdVal);
-                // creating a new MARKER
-                final Marker marker = Marker(
-                  markerId: markerId,
-                  position: LatLng(geopoint.latitude, geopoint.longitude),
-                  //marker window
-                  infoWindow: InfoWindow(
-                    title: name,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (c) => PlaceDetail(data: data)));
-                    },
-                  ),
-                );
+                  var markerIdVal = document.id;
+                  final MarkerId markerId = MarkerId(markerIdVal);
+                  // creating a new MARKER
+                  final Marker marker = Marker(
+                    markerId: markerId,
+                    position: LatLng(geopoint.latitude, geopoint.longitude),
+                    //marker window
+                    infoWindow: InfoWindow(
+                      title: name,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) => PlaceDetail(data: data)));
+                      },
+                    ),
+                  );
 
-                // adding a new marker to map
+                  // adding a new marker to map
 
-                markers[markerId] = marker;
-              });
-            }
-            return Stack(children: [
-              GoogleMap(
-                markers: Set<Marker>.of(markers.values),
-                mapType: MapType.terrain,
-                myLocationEnabled: true,
-                myLocationButtonEnabled: true,
-                zoomControlsEnabled: true,
-                initialCameraPosition: _Kuantan,
-                onMapCreated: (GoogleMapController controller) {
-                  _controllerGoogleMap.complete(controller);
-                  newGoogleMapController = controller;
-                  blackThemeGoogleMap();
+                  markers[markerId] = marker;
+                }
+              }
+              return Stack(children: [
+                GoogleMap(
+                  markers: Set<Marker>.of(markers.values),
+                  mapType: MapType.terrain,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
+                  zoomControlsEnabled: true,
+                  initialCameraPosition: _Kuantan,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controllerGoogleMap.complete(controller);
+                    newGoogleMapController = controller;
+                    blackThemeGoogleMap();
 
-                  //for black theme google  map
-                },
-              )
-            ]);
-          }),
-      floatingActionButton: Visibility(
-        visible: visible,
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (c) => AddLocation()));
-          },
-          label: const Text("Tambah Lokasi"),
-          icon: const Icon(Icons.add),
-          backgroundColor: Colors.orangeAccent,
+                    //for black theme google  map
+                  },
+                )
+              ]);
+            }),
+        floatingActionButton: Visibility(
+          visible: visible,
+          child: FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (c) => const AddLocation()));
+            },
+            label: const Text("Tambah Lokasi"),
+            icon: const Icon(Icons.add),
+            backgroundColor: Colors.orangeAccent,
+          ),
         ),
       ),
     );
@@ -291,7 +290,9 @@ class _MapPageState extends State<MapPage> {
       } else {
         visible = false;
       }
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 }

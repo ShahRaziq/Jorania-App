@@ -24,8 +24,10 @@ class WeatherCard extends StatelessWidget {
     Color color() {
       log(now.toString());
       if (now.hour > 6 && now.hour < 19) {
-        return Color.fromARGB(255, 65, 125, 180);
-      }else{return Colors.white;}     
+        return const Color.fromARGB(255, 65, 125, 180);
+      } else {
+        return Colors.white;
+      }
     }
 
     if (now.hour > 6 && now.hour < 19) {
@@ -37,24 +39,25 @@ class WeatherCard extends StatelessWidget {
     //print(MediaQuery.of(context).size.width.toString());
     return Container(
       decoration: BoxDecoration(
-          color: day ? Colors.grey : Color.fromARGB(255, 180, 222, 236),
+          color: day ? Colors.grey : const Color.fromARGB(255, 180, 222, 236),
           borderRadius: BorderRadius.circular(25)),
       child: Stack(
         children: [
           Positioned(
             child: day
-                ? Opacity(opacity: 0.6,
-                  child: Image.asset(
+                ? Opacity(
+                    opacity: 0.6,
+                    child: Image.asset(
                       "asset/night.png",
                       height: 200.h,
                     ),
-                )
-                : Opacity(opacity: 0.95,
-                  child: Image.asset(
-                    "asset/Group 3.png",
-                     height: 220.h,
-                    )
-                    ),
+                  )
+                : Opacity(
+                    opacity: 0.95,
+                    child: Image.asset(
+                      "asset/Group 3.png",
+                      height: 220.h,
+                    )),
             right: -3,
             top: -30,
           ),

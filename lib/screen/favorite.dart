@@ -35,18 +35,18 @@ class _FavoritePageState extends State<FavoritePage> {
       appBar: AppBar(
         backgroundColor: Colors.orange[300],
         automaticallyImplyLeading: false,
-        title: Text('Lokasi Kegemaran'),
+        title: const Text('Lokasi Kegemaran'),
       ), // AppBar
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: loading
-                ? SizedBox(
+                ? const SizedBox(
                     width: double.infinity,
                     child: Center(child: CircularProgressIndicator()))
                 : ListView.builder(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemCount: locations.length,
                     itemBuilder: ((context, index) {
                       return InkWell(

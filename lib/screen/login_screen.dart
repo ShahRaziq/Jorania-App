@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email),
+                    prefixIcon: const Icon(Icons.email),
                     contentPadding: EdgeInsets.fromLTRB(20.w, 15.h, 20.w, 15.h),
                     labelText: 'Emel',
                     border: OutlineInputBorder(
@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   textInputAction: TextInputAction.done,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.vpn_key),
+                    prefixIcon: const Icon(Icons.vpn_key),
                     contentPadding: EdgeInsets.fromLTRB(20.w, 15.h, 20.w, 15.h),
                     labelText: 'Kata laluan',
                     border: OutlineInputBorder(
@@ -105,10 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50.h),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
                       ),
-                      primary: Color(0xffFE8C4A)),
+                      primary: const Color(0xffFE8C4A)),
                   icon: Icon(Icons.login, size: 32.sp),
                   label: Text(
                     'LOG MASUK',
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         EasyLoading.showToast('Selamat kembali!');
                         EasyLoading.dismiss();
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (c) => NavBar()));
+                            MaterialPageRoute(builder: (c) => const NavBar()));
                       }
                     });
                   },
@@ -134,23 +134,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 19.h,
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text("Baru di aplikasi ini?"),
+                  const Text("Baru di aplikasi ini?"),
                   TextButton(
                       onPressed: () {
                         //button to signup screen
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpScreen()),
+                              builder: (context) => const SignUpScreen()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Daftar masuk",
                         style: TextStyle(color: Color(0xff375DBF)),
                       ))
                 ]),
                 GestureDetector(
-                  child: Text(
+                  child: const Text(
                     'Lupa kata laluan?',
                     style: TextStyle(
                       decoration: TextDecoration.underline,
@@ -159,8 +159,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (c) => ForgotPassword()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (c) => const ForgotPassword()));
                   },
                 ),
               ],

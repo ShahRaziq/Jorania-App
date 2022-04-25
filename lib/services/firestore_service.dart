@@ -2,10 +2,12 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 class FireStoreService {
-  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
+  //user
   String error = "";
   Future<void> createUserData(
       String name, String userid, String email, String role) async {
@@ -31,6 +33,7 @@ class FireStoreService {
     return data;
   }
 
+  //LOCATION
   Future<void> uploadLocationData(GeoPoint geo, String desc, String name,
       List<String> pic, String tips) async {
     await _firebaseFirestore.collection("lokasi").doc().set({
@@ -56,5 +59,37 @@ class FireStoreService {
       String id) async {
     var data = await _firebaseFirestore.collection("lokasi").doc(id).get();
     return data;
+  }
+
+  //SERVICE
+  Future<void> uploadServiceData(String name, String hari, String waktu,
+      String tel, String desc, List<String> pic) async {
+    await _firebaseFirestore.collection("servis_memancing").doc().set({
+      "ser_name": name,
+      "ser_hari": hari,
+      "ser_waktu": waktu,
+      "ser_tel": tel,
+      "ser_desc": desc,
+      "ser_pic": pic,
+    });
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getdataService(
+      String id) async {
+    var data =
+        await _firebaseFirestore.collection("servis_memancing").doc(id).get();
+    return data;
+  }
+
+  Future<void> updateServiceData(String name, String hari, String waktu,
+      String tel, String desc, String id, pics) async {
+    await _firebaseFirestore.collection("servis_memancing").doc(id).update({
+      "ser_name": name,
+      "ser_hari": hari,
+      "ser_waktu": waktu,
+      "ser_tel": tel,
+      "ser_desc": desc,
+      "ser_pic": pics
+    });
   }
 }

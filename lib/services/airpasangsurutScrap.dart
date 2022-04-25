@@ -2,9 +2,8 @@ import 'dart:developer';
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
 
-
 class AirPasangSurut {
-    Future<Map<String, Map<String, String>>> extractData(String kawasan) async {
+  Future<Map<String, Map<String, String>>> extractData(String kawasan) async {
     // Getting the response from the targeted url
     Map<String, String> location = {
       "Pulau Langkawi":

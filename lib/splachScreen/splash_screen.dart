@@ -16,7 +16,7 @@ class MySplashScreen extends StatefulWidget {
 }
 
 class _MySplashScreenState extends State<MySplashScreen> {
-  dynamic nextScreen = NavBar();
+  dynamic nextScreen = const NavBar();
   startTimer() {
     Timer(const Duration(seconds: 3), () async {
       //send user to home screen\
@@ -33,7 +33,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
     var connectivityResult = await (Connectivity().checkConnectivity());
     log(connectivityResult.toString());
     if (connectivityResult == ConnectivityResult.none) {
-      nextScreen = NoConScreen();
+      nextScreen = const NoConScreen();
     }
   }
 
@@ -49,7 +49,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
       if (result != ConnectivityResult.none) {
       } else {
         Navigator.push(
-            context, MaterialPageRoute(builder: (c) => NoConScreen()));
+            context, MaterialPageRoute(builder: (c) => const NoConScreen()));
       }
     });
     startTimer();

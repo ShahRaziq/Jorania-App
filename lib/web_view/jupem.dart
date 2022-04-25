@@ -10,15 +10,13 @@ class JupemWV extends StatefulWidget {
 
 class _JupemWVState extends State<JupemWV> {
   late WebViewController controller;
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
-        title: Text('Ramalan pasang surut air 🌊'),
-        
+        title: const Text('Ramalan pasang surut air 🌊'),
       ),
       body: WebView(
         javascriptMode: JavascriptMode.unrestricted,
@@ -30,19 +28,17 @@ class _JupemWVState extends State<JupemWV> {
         onPageStarted: (url) {
           if (url.contains(
               'https://www.jupem.gov.my/staps/stesen-tanjung-gelang-pahang-1')) {
-            Future.delayed(Duration(milliseconds: 200), () {
-            //remove header  
-            controller.runJavascript(
-                "document.getElementsByTagName('header')[0].style.display='none'");
-            //remove footer
-            controller.runJavascript(
-                "document.getElementsByTagName('footer')[0].style.display='none'");
-
+            Future.delayed(const Duration(milliseconds: 200), () {
+              //remove header
+              controller.runJavascript(
+                  "document.getElementsByTagName('header')[0].style.display='none'");
+              //remove footer
+              controller.runJavascript(
+                  "document.getElementsByTagName('footer')[0].style.display='none'");
             });
           }
         },
       ),
-      
     );
   }
 }

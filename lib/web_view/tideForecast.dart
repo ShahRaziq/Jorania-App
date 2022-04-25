@@ -14,10 +14,10 @@ class _TideForcastWVState extends State<TideForcastWV> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,
-          title: Text('Ramalan terperinci ⛵'),
+          title: const Text('Ramalan terperinci ⛵'),
           actions: [
             IconButton(
-              icon: Icon(Icons.arrow_back_ios_new),
+              icon: const Icon(Icons.arrow_back_ios_new),
               onPressed: () {
                 controller.goBack();
               },
@@ -34,7 +34,7 @@ class _TideForcastWVState extends State<TideForcastWV> {
           onPageStarted: (url) {
             if (url.contains(
                 'https://www.tide-forecast.com/locations/Kuantan-Malaysia/tides/latest')) {
-              Future.delayed(Duration(milliseconds: 200), () {
+              Future.delayed(const Duration(milliseconds: 200), () {
                 //remove header
                 controller.runJavascript(
                     "document.getElementsByTagName('header')[0].style.display='none'");

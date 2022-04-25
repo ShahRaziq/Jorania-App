@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 class PlaceDetail extends StatefulWidget {
   final Map<String, dynamic> data;
 
-  PlaceDetail({
+  const PlaceDetail({
     Key? key,
     required this.data,
   }) : super(key: key);
@@ -62,11 +62,11 @@ class _PlaceDetailState extends State<PlaceDetail> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.fromLTRB(10, 10, 10, 20),
+              margin: const EdgeInsets.fromLTRB(10, 10, 10, 20),
 
               // color: Color.fromARGB(255, 163, 130, 130),
               child: CarouselSlider(
@@ -92,7 +92,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
                     widget.data["loc_name"],
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.visible,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.ellipsis),
@@ -104,14 +104,14 @@ class _PlaceDetailState extends State<PlaceDetail> {
                 //star button
                 Container(
                     height: 50.h,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 255, 157, 10),
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(width: 19.w),
-                          Text(
+                          const Text(
                             'Suka',
                             style: TextStyle(color: Colors.white),
                           ),
@@ -132,7 +132,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
                                 }
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
+                                  return const CircularProgressIndicator();
                                 }
                                 return LikeButton(
                                   isLiked: liked,
@@ -148,7 +148,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
                                   },
                                 );
                               }),
-                          SizedBox(width: 7),
+                          const SizedBox(width: 7),
                         ])),
                 SizedBox(
                   width: 20.w,
@@ -160,41 +160,24 @@ class _PlaceDetailState extends State<PlaceDetail> {
             ),
 
             //content keterangan
-            Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Container(
-                    height: 300.h,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Text(
-                        widget.data["loc_desc"],
-                        style: TextStyle(),
-                      ),
-                    ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                height: 300.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: const BorderRadius.all(Radius.circular(15))),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Text(
+                    widget.data["loc_desc"],
+                    style: const TextStyle(),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.orangeAccent,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(1),
-                      ),
-                      onPressed: () {},
-                      child: Icon(Icons.edit),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
+
             //header tips
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -202,47 +185,30 @@ class _PlaceDetailState extends State<PlaceDetail> {
                 SizedBox(
                   width: 30.w,
                 ),
-                Text(
+                const Text(
                   'Tips',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             //content tips
-            Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Text(
-                        widget.data["loc_tips"],
-                        style: TextStyle(),
-                      ),
-                    ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: const BorderRadius.all(Radius.circular(15))),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Text(
+                    widget.data["loc_tips"],
+                    style: const TextStyle(),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.orangeAccent,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(1),
-                      ),
-                      onPressed: () {},
-                      child: Icon(Icons.edit),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
+
             SizedBox(height: 20.h),
             //button GPS
             Row(
@@ -250,10 +216,10 @@ class _PlaceDetailState extends State<PlaceDetail> {
               children: [
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        minimumSize: Size(50, 50),
+                        minimumSize: const Size(50, 50),
                         primary: Colors.deepOrange[300],
                         shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(13))),
+                            borderRadius: BorderRadius.circular(13))),
                     onPressed: () async {
                       if (await MapLauncher.isMapAvailable(MapType.google) !=
                           null) {
@@ -269,11 +235,11 @@ class _PlaceDetailState extends State<PlaceDetail> {
                     },
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.directions,
                           size: 30,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
@@ -287,7 +253,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
                     )),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             )
           ],

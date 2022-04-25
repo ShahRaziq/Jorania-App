@@ -19,7 +19,7 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
 
-  final emelController = new TextEditingController();
+  final emelController = TextEditingController();
 
   AuthService authService = AuthService();
   @override
@@ -37,10 +37,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text('Tetapan semula kata laluan'),
+        title: const Text('Tetapan semula kata laluan'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(30),
+        padding: const EdgeInsets.all(30),
         child: Form(
             key: _formKey,
             child: Column(
@@ -50,12 +50,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   "asset/Jorania.png",
                   height: 300,
                 ),
-                Text(
+                const Text(
                   'Terima emel untuk menetapkan semula kata laluan anda',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16, color: Colors.purple),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: emelController,
                   cursorColor: Colors.white,
@@ -78,16 +78,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     return null;
                   },
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(25.0)),
-                      primary: Color(0xffFE8C4A),
-                      minimumSize: Size.fromHeight(50),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0)),
+                      primary: const Color(0xffFE8C4A),
+                      minimumSize: const Size.fromHeight(50),
                     ),
-                    icon: Icon(Icons.email),
-                    label: Text(
+                    icon: const Icon(Icons.email),
+                    label: const Text(
                       'Tetap semula kata laluan',
                       style: TextStyle(fontSize: 20),
                     ),
@@ -98,9 +98,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         resetPassword();
                       }
                     }),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text("Kembali ke"),
+                  const Text("Kembali ke"),
                   TextButton(
                       onPressed: () {
                         //button to new screen
@@ -110,7 +110,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               builder: (context) => LoginScreen()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Log masuk ",
                         style: TextStyle(color: Color(0xff375DBF)),
                       ))

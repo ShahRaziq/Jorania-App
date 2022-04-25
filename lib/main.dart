@@ -1,5 +1,4 @@
 import 'package:Jorania/providers/place_provider.dart';
-import 'package:Jorania/screen/addLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +12,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => PlaceProvider()),
-  ], child: MyApp()));
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,14 +22,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(480.0, 965.3333333333334),
+      designSize: const Size(480.0, 965.3333333333334),
       builder: () => MaterialApp(
         title: 'Jorania',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MySplashScreen(),
+        home: const MySplashScreen(),
         builder: EasyLoading.init(),
       ),
     );

@@ -21,10 +21,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   //default role =user
   String role = "user";
   //editting Controller
-  final nameController = new TextEditingController();
-  final emelController = new TextEditingController();
-  final passwordController = new TextEditingController();
-  final confirmPasswordController = new TextEditingController();
+  final nameController = TextEditingController();
+  final emelController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   AuthService authService = AuthService();
   FireStoreService fireStoreService = FireStoreService();
@@ -36,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     place.setPlace(widget);
     return Scaffold(
       body: SingleChildScrollView(
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30),
           child: Form(
             key: _formKey,
             child: Column(
@@ -46,7 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   "asset/Jorania.png",
                   height: 250,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 //nama user field
                 TextFormField(
                   controller: nameController,
@@ -55,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   keyboardType: TextInputType.name,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
-                    RegExp regex = new RegExp(r'^.{3,}$');
+                    RegExp regex = RegExp(r'^.{3,}$');
                     if (value!.isEmpty) {
                       return ("Sila isi butiran nama");
                     }
@@ -69,14 +69,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.account_circle),
-                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    prefixIcon: const Icon(Icons.account_circle),
+                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                     labelText: 'Nama',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 //emel field
                 TextFormField(
                   controller: emelController,
@@ -98,14 +98,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     emelController.text = value!;
                   },
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email),
-                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    prefixIcon: const Icon(Icons.email),
+                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                     labelText: 'Emel',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 //kata laluan field
                 TextFormField(
                   controller: passwordController,
@@ -114,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   obscureText: true,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
-                    RegExp regex = new RegExp(r'^.{6,}$');
+                    RegExp regex = RegExp(r'^.{6,}$');
                     if (value!.isEmpty) {
                       return ("Sila isi butiran kata laluan");
                     }
@@ -128,14 +128,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.vpn_key),
-                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    prefixIcon: const Icon(Icons.vpn_key),
+                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                     labelText: 'Kata laluan',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 //pengesahan kata laluan field
                 TextFormField(
                   controller: confirmPasswordController,
@@ -155,24 +155,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   textInputAction: TextInputAction.done,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.vpn_key),
-                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    prefixIcon: const Icon(Icons.vpn_key),
+                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                     labelText: 'Pengesahan kata laluan',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 //LOG MASUK button
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
                       ),
-                      primary: Color(0xffFE8C4A)),
-                  icon: Icon(Icons.app_registration, size: 32),
-                  label: Text(
+                      primary: const Color(0xffFE8C4A)),
+                  icon: const Icon(Icons.app_registration, size: 32),
+                  label: const Text(
                     'DAFTAR',
                     style: TextStyle(fontSize: 24),
                   ),
@@ -201,11 +201,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     });
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 19,
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text("Sudah mendaftar?"),
+                  const Text("Sudah mendaftar?"),
                   TextButton(
                       onPressed: () {
                         //button to new screen
@@ -215,7 +215,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               builder: (context) => LoginScreen()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Log masuk ",
                         style: TextStyle(color: Color(0xff375DBF)),
                       ))

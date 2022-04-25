@@ -67,7 +67,7 @@ class _NoConScreenState extends State<NoConScreen> {
                       style: TextStyle(
                         fontSize: 30.sp,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 133, 123, 124),
+                        color: const Color.fromARGB(255, 133, 123, 124),
                       )),
                   TextSpan(
                       text: ' Sila pastikan anda mempunyai sambungan ',
@@ -81,7 +81,7 @@ class _NoConScreenState extends State<NoConScreen> {
                       style: TextStyle(
                         fontSize: 30.sp,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 133, 123, 124),
+                        color: const Color.fromARGB(255, 133, 123, 124),
                       ))
                 ],
               ),

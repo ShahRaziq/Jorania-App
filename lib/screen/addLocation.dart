@@ -26,14 +26,13 @@ class _AddLocationState extends State<AddLocation> {
   FireStoreService fireStoreService = FireStoreService();
 
   //formkey
-  final _formKey = GlobalKey<FormState>();
   //default role =user
 
   //editting Controller
-  final nameController = new TextEditingController();
-  final detailController = new TextEditingController();
-  final tipsController = new TextEditingController();
-  final typeController = new TextEditingController();
+  final nameController = TextEditingController();
+  final detailController = TextEditingController();
+  final tipsController = TextEditingController();
+  final typeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +42,13 @@ class _AddLocationState extends State<AddLocation> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.anchor),
+              const Icon(Icons.anchor),
               Text(
                 'Tambah Lokasi Memancing',
                 style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
@@ -58,7 +57,7 @@ class _AddLocationState extends State<AddLocation> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Container(
                 margin: EdgeInsets.all(20.w),
                 width: double.infinity,
@@ -86,7 +85,7 @@ class _AddLocationState extends State<AddLocation> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           //upload image
-                          imageFileList!.length != 0
+                          imageFileList!.isNotEmpty
                               ? SizedBox(
                                   width: double.infinity,
                                   height: 200,
@@ -111,11 +110,15 @@ class _AddLocationState extends State<AddLocation> {
                                                 setState(() {});
                                               },
                                               child: Container(
-                                                padding: EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                decoration: const BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     color: Colors.red),
-                                                child: Icon(Icons.delete),
+                                                child: const Icon(
+                                                  Icons.delete,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -124,30 +127,30 @@ class _AddLocationState extends State<AddLocation> {
                                     },
                                     separatorBuilder:
                                         (BuildContext context, int index) {
-                                      return SizedBox(
+                                      return const SizedBox(
                                         width: 10,
                                       );
                                     },
                                   ),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(double.infinity, 40),
+                                  minimumSize: const Size(double.infinity, 40),
                                   primary: Colors.orange),
                               onPressed: () {
                                 selectImages();
                               },
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
+                                  children: const [
                                     Text("MUAT NAIK GAMBAR"),
                                     SizedBox(
                                       width: 30,
                                     ),
                                     Icon(Icons.add_photo_alternate)
                                   ])),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           //NAMA LOKASI
@@ -160,13 +163,13 @@ class _AddLocationState extends State<AddLocation> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black54),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.place,
                                 color: Colors.black54,
                               ),
                             ],
                           ),
-                          SizedBox(height: 3),
+                          const SizedBox(height: 3),
                           TextFormField(
                             controller: nameController,
                             autofocus: false,
@@ -175,7 +178,7 @@ class _AddLocationState extends State<AddLocation> {
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
-                              RegExp regex = new RegExp(r'^.{5,}$');
+                              RegExp regex = RegExp(r'^.{5,}$');
                               if (value!.isEmpty) {
                                 return ("Sila isi butiran nama lokasi");
                               }
@@ -190,13 +193,13 @@ class _AddLocationState extends State<AddLocation> {
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                  const EdgeInsets.fromLTRB(20, 15, 20, 15),
                               labelText: '',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                             ),
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           //ULASAN
                           Row(
                             children: [
@@ -207,7 +210,7 @@ class _AddLocationState extends State<AddLocation> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black54),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.draw_rounded,
                                 color: Colors.black54,
                               ),
@@ -223,7 +226,6 @@ class _AddLocationState extends State<AddLocation> {
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
-                              RegExp regex = new RegExp(r'^.{10,}$');
                               if (value!.isEmpty) {
                                 return ("Sila isi butiran ulasan");
                               }
@@ -238,15 +240,15 @@ class _AddLocationState extends State<AddLocation> {
                             textInputAction: TextInputAction.newline,
                             decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                  const EdgeInsets.fromLTRB(20, 15, 20, 15),
                               labelText: '',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           //TIPS
                           Row(
                             children: [
@@ -257,7 +259,7 @@ class _AddLocationState extends State<AddLocation> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black54),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.draw_rounded,
                                 color: Colors.black54,
                               ),
@@ -273,7 +275,6 @@ class _AddLocationState extends State<AddLocation> {
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
-                              RegExp regex = new RegExp(r'^.{10,}$');
                               if (value!.isEmpty) {
                                 return ("Sila isi butiran tips");
                               }
@@ -288,7 +289,7 @@ class _AddLocationState extends State<AddLocation> {
                             textInputAction: TextInputAction.newline,
                             decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                  const EdgeInsets.fromLTRB(20, 15, 20, 15),
                               labelText: '',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
@@ -316,7 +317,7 @@ class _AddLocationState extends State<AddLocation> {
                                       SizedBox(
                                         width: 20.w,
                                       ),
-                                      Icon(
+                                      const Icon(
                                         Icons.cancel_outlined,
                                         color: Colors.red,
                                       )
@@ -344,7 +345,7 @@ class _AddLocationState extends State<AddLocation> {
                                       SizedBox(
                                         width: 20.w,
                                       ),
-                                      Icon(
+                                      const Icon(
                                         Icons.add,
                                         color: Colors.green,
                                       )
@@ -397,7 +398,7 @@ class _AddLocationState extends State<AddLocation> {
       imageFileList = [];
       imageFileList!.addAll(selectedImages);
     }
-    print("Image List Length:" + imageFileList!.length.toString());
+
     setState(() {});
   }
 

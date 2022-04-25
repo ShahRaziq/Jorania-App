@@ -67,8 +67,8 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.transparent),
-          title: Text(
+          iconTheme: const IconThemeData(color: Colors.transparent),
+          title: const Text(
             "",
             style: TextStyle(fontSize: 30, color: Colors.transparent),
           ),
@@ -81,13 +81,13 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 // set up the buttons
                 Widget cancelButton = TextButton(
-                  child: Text("Tidak"),
+                  child: const Text("Tidak"),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 );
                 Widget continueButton = TextButton(
-                  child: Text("Ya"),
+                  child: const Text("Ya"),
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
                     Navigator.push(context,
@@ -97,8 +97,8 @@ class _HomePageState extends State<HomePage> {
 
                 // set up the AlertDialog
                 AlertDialog alert = AlertDialog(
-                  title: Text("Log Keluar"),
-                  content: Text("Anda pasti mahu log keluar?"),
+                  title: const Text("Log Keluar"),
+                  content: const Text("Anda pasti mahu log keluar?"),
                   actions: [
                     cancelButton,
                     continueButton,
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
         ),
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SizedBox(
@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Hai $username,",
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.deepPurple,
                           fontSize: 35,
                           fontWeight: FontWeight.bold),
@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   WeatherCard(
                     date: dateString,
                     temp: temp.toString(),
@@ -156,22 +156,22 @@ class _HomePageState extends State<HomePage> {
                         ? placemarks!.elementAt(0).locality!
                         : "",
                   ),
-                  SizedBox(height: 30),
-                  Text("Ramalan air pasang surut 🌊:",
+                  const SizedBox(height: 30),
+                  const Text("Ramalan air pasang surut 🌊:",
                       style: TextStyle(
                           color: Color(0xff323F4B),
                           fontSize: 20,
                           fontWeight: FontWeight.w500)),
 
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   //card ramalan air pasang surut jupem
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    color: Color.fromARGB(240, 216, 109, 60),
+                    color: const Color.fromARGB(240, 216, 109, 60),
                     child: InkWell(
-                      splashColor:
-                          Color.fromARGB(255, 131, 173, 163).withAlpha(50),
+                      splashColor: const Color.fromARGB(255, 131, 173, 163)
+                          .withAlpha(50),
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => JupemWV()));
@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15)),
-                          padding: EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Center(
                             child: Column(
                               children: [
@@ -190,12 +190,12 @@ class _HomePageState extends State<HomePage> {
                                             fontSize: 25.sp,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white))
-                                    : SizedBox(),
+                                    : const SizedBox(),
                                 airPasang != null
                                     ?
                                     //pasang surut table
                                     DataTable(
-                                        columns: [
+                                        columns: const [
                                             DataColumn(
                                                 label: Text('Masa',
                                                     style: TextStyle(
@@ -236,10 +236,10 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             )
                                             .toList())
-                                    : SizedBox(),
+                                    : const SizedBox(),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
+                                  children: const [
                                     Text(
                                       'Stesen: Tanjung Gelang, Pahang',
                                       textAlign: TextAlign.center,
@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ],
                                 ),
-                                Text(
+                                const Text(
                                   "sumber: laman web rasmi JUPEM",
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 107, 88, 192),
@@ -262,15 +262,15 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   //card forecast.com TideForcastWV
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    color: Color.fromARGB(255, 24, 120, 175),
+                    color: const Color.fromARGB(255, 24, 120, 175),
                     child: InkWell(
-                      splashColor:
-                          Color.fromARGB(255, 131, 173, 163).withAlpha(50),
+                      splashColor: const Color.fromARGB(255, 131, 173, 163)
+                          .withAlpha(50),
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (c) => TideForcastWV()));
@@ -278,12 +278,12 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15)),
-                          padding: EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
+                                const Text(
                                   'Ramalan terperinci ',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
@@ -292,7 +292,7 @@ class _HomePageState extends State<HomePage> {
                                 SizedBox(
                                   width: 10.w,
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.arrow_forward_ios,
                                   color: Colors.white,
                                 ),
@@ -301,7 +301,7 @@ class _HomePageState extends State<HomePage> {
                           )),
                     ),
                   ),
-                  Text(
+                  const Text(
                     "sumber: laman web rasmi tide-forcast.com",
                     style: TextStyle(
                       color: Color.fromARGB(255, 107, 88, 192),
