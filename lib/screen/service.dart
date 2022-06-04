@@ -234,7 +234,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
-      if (value.data()!["role"].toString() == "panel") {
+      if (value.data()!["role"].toString() == "admin") {
         visible = true;
       } else {
         visible = false;

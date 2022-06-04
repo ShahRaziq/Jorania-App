@@ -25,7 +25,7 @@ class _MapPageState extends State<MapPage> {
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   bool visible = false;
 
-  static const CameraPosition _Kuantan = CameraPosition(
+  static const CameraPosition _kuantan = CameraPosition(
     target: LatLng(3.8170687016220435, 103.33250841777334),
     zoom: 14.4746,
   );
@@ -252,7 +252,7 @@ class _MapPageState extends State<MapPage> {
                   myLocationEnabled: true,
                   myLocationButtonEnabled: true,
                   zoomControlsEnabled: true,
-                  initialCameraPosition: _Kuantan,
+                  initialCameraPosition: _kuantan,
                   onMapCreated: (GoogleMapController controller) {
                     _controllerGoogleMap.complete(controller);
                     newGoogleMapController = controller;
@@ -267,8 +267,40 @@ class _MapPageState extends State<MapPage> {
           visible: visible,
           child: FloatingActionButton.extended(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (c) => const AddLocation()));
+              Widget cancelButton = TextButton(
+                child: const Text("Tidak"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              );
+              Widget continueButton = TextButton(
+                child: const Text("Ya"),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddLocation()));
+                },
+              );
+
+              // set up the AlertDialog
+              AlertDialog alert = AlertDialog(
+                title: const Text("Tambah Lokasi"),
+                content: const Text(
+                    "Anda perlu berada di lokasi baru yang ingin ditambah terlebih dahulu. Sila semak lokasi anda dengan menekan butang di penjuru atas kanan. Sudahkah anda berada di lokasi yang ingin ditambah?"),
+                actions: [
+                  cancelButton,
+                  continueButton,
+                ],
+              );
+
+              // show the dialog
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return alert;
+                },
+              );
             },
             label: const Text("Tambah Lokasi"),
             icon: const Icon(Icons.add),

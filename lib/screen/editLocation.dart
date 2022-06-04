@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:Jorania/services/firestore_service.dart';
@@ -441,6 +440,19 @@ class _EditLocationState extends State<EditLocation> {
                                               a.addAll({'id': widget.id});
                                               a.update('loc_pic',
                                                   (value) => imageNetworkList);
+                                              a.update(
+                                                  'loc_name',
+                                                  (value) =>
+                                                      nameController.text);
+                                              a.update(
+                                                  'loc_desc',
+                                                  (value) =>
+                                                      detailController.text);
+                                              a.update(
+                                                  'loc_tips',
+                                                  (value) =>
+                                                      tipsController.text);
+                                              Navigator.pop(context);
 
                                               Navigator.pushReplacement(
                                                   context,
@@ -483,7 +495,9 @@ class _EditLocationState extends State<EditLocation> {
                                                 .collection("lokasi")
                                                 .doc(widget.id)
                                                 .delete();
-                                            Navigator.of(context).pop();
+
+                                            removeFavLoc();
+
                                             Navigator.of(context).pop();
                                             Navigator.of(context).pop();
                                           },
@@ -537,6 +551,24 @@ class _EditLocationState extends State<EditLocation> {
           "location/${imageFileList![i].name}", File(imageFileList![i].path));
       imageNetworkList!.add(url);
     }
+  }
+
+  Future removeFavLoc() async {
+    FirebaseFirestore.instance.collection("user").get().then((value) async {
+      if (value.docs.isNotEmpty) {
+        for (var element in value.docs) {
+          if ((element.data()["favLoc"] as List).contains(widget.id)) {
+            Map<String, dynamic> data = element.data();
+            (data["favLoc"] as List).remove(widget.id);
+
+            await FirebaseFirestore.instance
+                .collection("user")
+                .doc(element.id)
+                .set(data);
+          }
+        }
+      }
+    });
   }
 
   void selectImages() async {

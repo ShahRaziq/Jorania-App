@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Jorania/services/airpasangsurutScrap.dart';
 import 'package:geocoding/geocoding.dart';
@@ -15,7 +14,6 @@ import 'package:Jorania/screen/login_screen.dart';
 import 'package:Jorania/services/firestore_service.dart';
 import 'package:Jorania/web_view/jupem.dart';
 import 'package:Jorania/web_view/tideForecast.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -125,7 +123,7 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(15.0),
             child: SizedBox(
               width: double.infinity,
               child: Column(
@@ -168,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    color: const Color.fromARGB(240, 216, 109, 60),
+                    color: const Color.fromARGB(255, 236, 120, 67),
                     child: InkWell(
                       splashColor: const Color.fromARGB(255, 131, 173, 163)
                           .withAlpha(50),

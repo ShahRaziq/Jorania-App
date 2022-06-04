@@ -38,9 +38,12 @@ class _ListServicePageState extends State<ListServicePage> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const AddService()));
           },
-          label: const Text("servis"),
+          label: const Text(
+            "servis",
+            style: TextStyle(fontSize: 17),
+          ),
           icon: const Icon(Icons.add),
-          backgroundColor: const Color.fromARGB(255, 150, 100, 35),
+          backgroundColor: const Color.fromARGB(255, 216, 153, 71),
         ),
       ),
       //appbar
@@ -167,7 +170,7 @@ class _ListServicePageState extends State<ListServicePage> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
-      if (value.data()!["role"].toString() == "panel") {
+      if (value.data()!["role"].toString() == "admin") {
         visible = true;
       } else {
         visible = false;

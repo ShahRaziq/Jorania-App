@@ -369,14 +369,14 @@ class _AddLocationState extends State<AddLocation> {
   }
 
   void addLocation() async {
-    EasyLoading.show();
+    EasyLoading.show(status: "sedang diproses...");
     Position position = await _determinePosition();
     List<String> picUrl = await uploadImage();
     GeoPoint geoPoint = GeoPoint(position.latitude, position.longitude);
 
     await fireStoreService.uploadLocationData(geoPoint, detailController.text,
         nameController.text, picUrl, tipsController.text);
-    EasyLoading.dismiss();
+    EasyLoading.showSuccess("Lokasi baru berjaya ditambah!");
     Navigator.of(context).pop();
   }
 

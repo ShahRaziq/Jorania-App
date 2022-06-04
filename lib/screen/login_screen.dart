@@ -1,6 +1,4 @@
 import 'package:Jorania/providers/place_provider.dart';
-import 'package:Jorania/screen/noConnection_screen.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -104,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 20.h),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50.h),
+                      minimumSize: Size(double.infinity, 60.h),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
