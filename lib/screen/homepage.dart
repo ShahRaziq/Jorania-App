@@ -88,8 +88,10 @@ class _HomePageState extends State<HomePage> {
                   child: const Text("Ya"),
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (c) => LoginScreen()),
+                        (Route<dynamic> route) => false);
                   },
                 );
 

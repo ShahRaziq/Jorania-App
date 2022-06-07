@@ -1,4 +1,5 @@
 import 'package:Jorania/providers/place_provider.dart';
+import 'package:Jorania/screen/homepage.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -122,8 +123,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       } else {
                         EasyLoading.showToast('Selamat kembali!');
                         EasyLoading.dismiss();
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (c) => const NavBar()));
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (c) => const HomePage()),
+                            (Route<dynamic> route) => false);
                       }
                     });
                   },

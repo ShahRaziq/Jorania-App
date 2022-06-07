@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Jorania/screen/login_screen.dart';
 import 'package:Jorania/screen/nav_bar.dart';
-import 'package:provider/provider.dart';
 
 class MySplashScreen extends StatefulWidget {
   const MySplashScreen({Key? key}) : super(key: key);
@@ -21,10 +20,15 @@ class _MySplashScreenState extends State<MySplashScreen> {
     Timer(const Duration(seconds: 3), () async {
       //send user to home screen\
       if (FirebaseAuth.instance.currentUser == null) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (c) => LoginScreen()));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (c) => LoginScreen()),
+            (Route<dynamic> route) => false);
       } else {
-        Navigator.push(context, MaterialPageRoute(builder: (c) => nextScreen));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (c) => nextScreen),
+            (Route<dynamic> route) => false);
       }
     });
   }
