@@ -44,8 +44,8 @@ Using mobile app to digitalize Masjid operations. Clear objectives to elevate us
      <td>Petugas Masjid (Admin) Homepage</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/assets/screenshot/splaxhscreen.png" width=270 height=480></td>
-    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/assets/screenshot/login.png" width=270 height=480></td>
+    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/splaxhscreen.png" width=270 height=480></td>
+    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/loginpage.png" width=270 height=480></td>
     <td><img src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/screens/admin_home_screen.png" width=270 height=480></td>
   </tr>
  </table>
