@@ -1,5 +1,5 @@
 
-<!-- <p align="center"><img width=60% src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/images/e-masjid_wide.png"></p> -->
+<p align="center"><img width=60% src="https://github.com/marwanbukhori/e_masjid/blob/master/asset/Jorania.png"></p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -16,10 +16,10 @@ Using mobile app to digitalize Masjid operations. Clear objectives to elevate us
 
 ##  Features
 
-#### User (Ahli Kariah)
+#### Ahli Biasa (Normal User)
 - Login/ Register/ Logout
-- Tanya Imam
-- Mohon Nikah
+- View fishing spot in map
+- Set favorite 
 - Tempah Qurban
 - Sumbang Wang
 - Semak Status 
@@ -40,25 +40,25 @@ Using mobile app to digitalize Masjid operations. Clear objectives to elevate us
 <table>
   <tr>
     <td>Splash Screen</td>
-     <td>Kariah Homepage</td>
-     <td>Petugas Masjid (Admin) Homepage</td>
+     <td> Login Screen</td>
+     <td> Home Screen</td>
   </tr>
   <tr>
     <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/splaxhscreen.png" width=270 height=480></td>
     <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/loginpage.png" width=270 height=480></td>
-    <td><img src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/screens/admin_home_screen.png" width=270 height=480></td>
+    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/loginpage.png" width=270 height=480></td>
   </tr>
  </table>
  <table>
   <tr>
-    <td>Tanya Imam</td>
-     <td>Mohon Nikah</td>
-     <td>Tempah Qurban</td>
+    <td>Map Screen</td>
+     <td>Add New Fishing Spot</td>
+     <td>Edit Fishing Spot Info</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/screens/ask_imam_screen.png" width=270 height=480></td>
-    <td><img src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/screens/apply_nikah.png" width=270 height=480></td>
-    <td><img src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/screens/apply_qurban.png" width=270 height=480></td>
+    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/map.png" width=270 height=480></td>
+    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/tambahlokasi.png" width=270 height=480></td>
+    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/editloc.png" width=270 height=480></td>
   </tr>
  </table>
  
