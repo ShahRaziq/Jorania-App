@@ -1,5 +1,5 @@
 
-<p align="center"><img width=60% src="https://github.com/marwanbukhori/e_masjid/blob/master/asset/Jorania.png"></p>
+<p align="center"><img width=60% src="https://github.com/ShahRaziq/Jorania-App/blob/master/asset/Jorania.png"></p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
