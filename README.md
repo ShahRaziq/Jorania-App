@@ -1,16 +1,65 @@
-# genshin
 
-A new Flutter project.
+<!-- <p align="center"><img width=60% src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/images/e-masjid_wide.png"></p> -->
 
-## Getting Started
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-This project is a starting point for a Flutter application.
+[![Build Status](https://travis-ci.org/anfederico/clairvoyant.svg?branch=master)](https://travis-ci.org/anfederico/clairvoyant)
+![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
+[![GitHub Issues](https://img.shields.io/github/issues/anfederico/clairvoyant.svg)](https://github.com/anfederico/clairvoyant/issues)
+![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-A few resources to get you started if this is your first Flutter project:
+##  Overview
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Using mobile app to digitalize Masjid operations. Clear objectives to elevate user experience at masjid & induce self-productivity with Event Schedule, Online Sadaqah, built-in Quran features, direct question asking and more! 
+<br>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+##  Features
+
+#### User (Ahli Kariah)
+- Login/ Register/ Logout
+- Tanya Imam
+- Mohon Nikah
+- Tempah Qurban
+- Sumbang Wang
+- Semak Status 
+- Jadual Program (Daily, Weekly, Monthly view)
+- Quran
+- Hadis 40 
+- Doa-doa Harian
+     
+#### Admin (Petugas Masjid)
+
+* Login / Logout
+* Sah Permohonan / Balas
+* Tambah / Sunting Program
+
+<br>
+## Screens
+<br>
+<table>
+  <tr>
+    <td>Login</td>
+     <td>Kariah Homepage</td>
+     <td>Petugas Masjid (Admin) Homepage</td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/assets/screenshot/splashscreen.png" width=270 height=480></td>
+    <td><img src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/screens/home_screen.png" width=270 height=480></td>
+    <td><img src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/screens/admin_home_screen.png" width=270 height=480></td>
+  </tr>
+ </table>
+ <table>
+  <tr>
+    <td>Tanya Imam</td>
+     <td>Mohon Nikah</td>
+     <td>Tempah Qurban</td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/screens/ask_imam_screen.png" width=270 height=480></td>
+    <td><img src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/screens/apply_nikah.png" width=270 height=480></td>
+    <td><img src="https://github.com/marwanbukhori/e_masjid/blob/master/assets/screens/apply_qurban.png" width=270 height=480></td>
+  </tr>
+ </table>
+ 
+
