@@ -49,20 +49,36 @@ Using mobile app to digitalize Fisahing locations around Kuantan district of Pah
   <tr>
     <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/splaxhscreen.png" width=270 height=480></td>
     <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/loginpage.png" width=270 height=480></td>
-    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/loginpage.png" width=270 height=480></td>
+    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/home.png" width=270 height=480></td>
   </tr>
  </table>
  <table>
   <tr>
-    <td>Map Screen</td>
+     <td>Map Screen</td>
+     <td>Fishing Spot Detail</td>  
      <td>Add New Fishing Spot</td>
-     <td>Edit Fishing Spot Info</td>
+     <td>Edit Fishing Spot Info</td>      
   </tr>
   <tr>
     <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/map.png" width=270 height=480></td>
+    <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/loc.png" width=270 height=480></td>   
     <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/tambahlokasi.png" width=270 height=480></td>
     <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/editloc.png" width=270 height=480></td>
   </tr>
+ </table>
+ <table>
+     <tr>
+          <td>Service list</td>
+          <td>Service detail</td>
+          <td>Add New Service </td>
+          <td>Edit Service detail</td>
+     </tr>
+     <tr>
+         <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/listservice.png" width=270 height=480></td>
+         <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/servis.png" width=270 height=480></td>   
+         <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/tambahservis.png" width=270 height=480></td>
+         <td><img src="https://github.com/ShahRaziq/Jorania-app/blob/master/asset/screenshot/editservis.png" width=270 height=480></td>
+     </tr>
  </table>
  
 
