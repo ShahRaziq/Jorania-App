@@ -66,10 +66,12 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           centerTitle: true,
           iconTheme: const IconThemeData(color: Colors.transparent),
-          title: const Text(
-            "",
-            style: TextStyle(fontSize: 30, color: Colors.transparent),
-          ),
+          title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(
+              width: 30.w,
+            ),
+            Image.asset('asset/heading.png', height: 80.h)
+          ]),
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           elevation: 0,

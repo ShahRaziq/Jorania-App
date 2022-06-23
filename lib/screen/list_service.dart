@@ -53,7 +53,7 @@ class _ListServicePageState extends State<ListServicePage> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Senarai Servis'),
+              const Text('          Senarai Servis'),
               Icon(
                 Icons.store,
                 size: 30.sp,

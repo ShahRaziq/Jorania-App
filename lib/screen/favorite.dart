@@ -32,7 +32,14 @@ class _FavoritePageState extends State<FavoritePage> {
       appBar: AppBar(
         backgroundColor: Colors.orange[300],
         automaticallyImplyLeading: false,
-        title: const Text('Lokasi Kegemaran'),
+        title: Center(
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text('Lokasi Kegemaran'),
+                Icon(Icons.location_on_rounded)
+              ]),
+        ),
       ), // AppBar
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

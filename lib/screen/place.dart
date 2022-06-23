@@ -70,7 +70,10 @@ class _PlaceDetailState extends State<PlaceDetail> {
 
               // color: Color.fromARGB(255, 163, 130, 130),
               child: CarouselSlider(
-                options: CarouselOptions(height: 250.0),
+                options: CarouselOptions(
+                    enlargeCenterPage: true,
+                    enlargeStrategy: CenterPageEnlargeStrategy.height,
+                    height: 250.0),
                 items: picUrl!.map((i) {
                   return Builder(
                     builder: (BuildContext context) {

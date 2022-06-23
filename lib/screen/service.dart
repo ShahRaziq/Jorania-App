@@ -68,7 +68,10 @@ class _ServiceDetailState extends State<ServiceDetail> {
               margin: EdgeInsets.all(20.w),
               // color: Color.fromARGB(255, 163, 130, 130),
               child: CarouselSlider(
-                options: CarouselOptions(height: 255.0),
+                options: CarouselOptions(
+                    enlargeCenterPage: true,
+                    enlargeStrategy: CenterPageEnlargeStrategy.height,
+                    height: 255.0),
                 items: picUrl!.map((i) {
                   return Builder(
                     builder: (BuildContext context) {
@@ -85,12 +88,10 @@ class _ServiceDetailState extends State<ServiceDetail> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  child: Text(
-                    widget.data["ser_name"],
-                    style:
-                        TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
-                  ),
+                Text(
+                  widget.data["ser_name"],
+                  style:
+                      TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
