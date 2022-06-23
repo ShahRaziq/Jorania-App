@@ -55,7 +55,13 @@ class _ServiceDetailState extends State<ServiceDetail> {
       ),
       appBar: AppBar(
         backgroundColor: Colors.orange[300],
-        title: const Text('Servis '),
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('Servis memancing '),
+              Icon(Icons.store_mall_directory),
+              SizedBox(width: 50)
+            ]),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
