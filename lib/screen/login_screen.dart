@@ -1,5 +1,4 @@
 import 'package:Jorania/providers/place_provider.dart';
-import 'package:Jorania/screen/homepage.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -125,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         EasyLoading.dismiss();
                         Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (c) => const HomePage()),
+                            MaterialPageRoute(builder: (c) => const NavBar()),
                             (Route<dynamic> route) => false);
                       }
                     });

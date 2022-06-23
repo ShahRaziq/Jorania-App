@@ -78,7 +78,7 @@ class _EditLocationState extends State<EditLocation> {
         ),
       ),
       body: loading
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

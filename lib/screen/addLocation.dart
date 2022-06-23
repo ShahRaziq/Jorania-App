@@ -204,7 +204,7 @@ class _AddLocationState extends State<AddLocation> {
                           Row(
                             children: [
                               Text(
-                                'ULASAN',
+                                'KETERANGAN(Jenis Ikan/latar belakang)',
                                 style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
@@ -253,7 +253,7 @@ class _AddLocationState extends State<AddLocation> {
                           Row(
                             children: [
                               Text(
-                                'Tips',
+                                'Tips(Jenis umpan/masa/teknik yang sesuai)',
                                 style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
