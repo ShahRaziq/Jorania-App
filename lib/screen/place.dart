@@ -57,6 +57,12 @@ class _PlaceDetailState extends State<PlaceDetail> {
         ),
       ),
       appBar: AppBar(
+        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Image.asset('asset/heading.png', height: 80.h),
+          SizedBox(
+            width: 30.w,
+          )
+        ]),
         foregroundColor: Colors.grey[700],
         backgroundColor: Colors.transparent,
         elevation: 0,

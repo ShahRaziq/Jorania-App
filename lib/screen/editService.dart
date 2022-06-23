@@ -78,11 +78,7 @@ class _EditServiceState extends State<EditService> {
         ),
       ),
       body: loading
-          ? Center(
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width,
-                  child: const CircularProgressIndicator()))
+          ? const Center(child: SizedBox(child: CircularProgressIndicator()))
           : Column(children: [
               SizedBox(
                 height: 10.h,
