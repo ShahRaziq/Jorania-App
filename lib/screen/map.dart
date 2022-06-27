@@ -287,7 +287,9 @@ class _MapPageState extends State<MapPage> {
               AlertDialog alert = AlertDialog(
                 title: const Text("Tambah Lokasi"),
                 content: const Text(
-                    "Anda perlu berada di lokasi baru yang ingin ditambah terlebih dahulu. Sila semak lokasi anda dengan menekan butang di penjuru atas kanan. Sudahkah anda berada di lokasi yang ingin ditambah?"),
+                  "Anda perlu berada di lokasi baharu yang ingin ditambah terlebih dahulu. Sila semak lokasi anda dengan menekan butang di penjuru atas kanan. Sudahkah anda berada di lokasi yang ingin ditambah?",
+                  textAlign: TextAlign.justify,
+                ),
                 actions: [
                   cancelButton,
                   continueButton,
