@@ -82,67 +82,91 @@ class _ListServicePageState extends State<ListServicePage> {
           ),
           //List View
           Expanded(
-            child: loading
-                ? const SizedBox(
-                    width: double.infinity,
-                    child: Center(child: CircularProgressIndicator()))
-                : ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: services.length,
-                    itemBuilder: ((context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (c) => ServiceDetail(
-                                        data: services[index],
-                                      )));
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                          height: 100,
-                          decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 216, 192, 161),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 50.w,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    services[index]["ser_name"],
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
+              child: loading
+                  ? const SizedBox(
+                      width: double.infinity,
+                      child: Center(child: CircularProgressIndicator()))
+                  : StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (snapshot.hasData) {
+                          services.clear();
+                          for (var element in snapshot.data!.docs) {
+                            Map<String, dynamic> data = element.data();
+                            data.addAll({'id': element.id});
+                            services.add(data);
+                          }
+
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: services.length,
+                            itemBuilder: ((context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (c) => ServiceDetail(
+                                                data: services[index],
+                                              )));
+                                },
+                                child: Container(
+                                  margin:
+                                      const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                                  height: 100,
+                                  decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 216, 192, 161),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 50.w,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                            services[index]["ser_name"],
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Row(children: [
+                                            const Icon(
+                                                Icons.calendar_month_rounded),
+                                            Text(
+                                              services[index]["ser_hari"],
+                                            ),
+                                          ]),
+                                          Row(children: [
+                                            const Icon(Icons.access_alarm),
+                                            Text(
+                                              services[index]["ser_waktu"],
+                                            ),
+                                          ]),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  Row(children: [
-                                    const Icon(Icons.calendar_month_rounded),
-                                    Text(
-                                      services[index]["ser_hari"],
-                                    ),
-                                  ]),
-                                  Row(children: [
-                                    const Icon(Icons.access_alarm),
-                                    Text(
-                                      services[index]["ser_waktu"],
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-          ),
+                                ),
+                              );
+                            }),
+                          );
+                        }
+                        return const SizedBox();
+                      },
+                      stream: FirebaseFirestore.instance
+                          .collection("servis_memancing")
+                          .snapshots(),
+                    )),
         ],
       ),
     );
