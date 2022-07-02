@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:Jorania/providers/place_provider.dart';
-import 'package:Jorania/screen/place.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -452,14 +451,16 @@ class _EditLocationState extends State<EditLocation> {
                                                   'loc_tips',
                                                   (value) =>
                                                       tipsController.text);
-                                              Navigator.pop(context);
 
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          PlaceDetail(
-                                                              data: a)));
+                                              Navigator.pop(context);
+                                              // Navigator.pop(context);
+
+                                              // Navigator.pushReplacement(
+                                              //     context,
+                                              //     MaterialPageRoute(
+                                              //         builder: (context) =>
+                                              //             PlaceDetail(
+                                              //                 data: a)));
                                             });
                                           });
                                         },

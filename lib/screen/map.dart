@@ -203,6 +203,7 @@ class _MapPageState extends State<MapPage> {
     // TODO: implement initState
     super.initState();
     checkUserRole();
+    setState(() {});
   }
 
   @override

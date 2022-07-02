@@ -252,7 +252,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
 
   void _launchUrl() async {
     if (!await launch(
-        "https://wa.me/+6'${widget.data["ser_tel"]}'?text=Jorania%3E%20adakah%20servis%20masih%20tersedia%3F%0A")) {
+        "https://wa.me/+6'${widget.data["ser_tel"]}'?text=Jorania%3E%20adakah%20servis%20ini%20masih%20tersedia%3F%0A")) {
       throw 'Could not launch ';
     }
   }

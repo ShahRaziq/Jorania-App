@@ -22,6 +22,7 @@ class _ListServicePageState extends State<ListServicePage> {
     super.initState();
     getData();
     checkUserRole();
+    setState(() {});
   }
 
   List<Map<String, dynamic>> services = [];

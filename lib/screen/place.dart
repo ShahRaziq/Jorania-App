@@ -34,6 +34,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
     super.initState();
     checkUserRole();
     picUrl = widget.data["loc_pic"];
+    setState(() {});
   }
 
   @override
