@@ -14,6 +14,9 @@
 Using mobile app to digitalize Fishing locations around Kuantan district of Pahang, Malaysia. Clear objective is to elevate user experience from planning phase to during the fishing activities. Jorania provide useful tools for anglers like tides schedule, map interaction, listing of fishing related services and more! 
 <br>
 
+## Jorania app demo
+https://youtu.be/Z3vva9aUZA4
+
 ##  User Type
 
 #### Ahli Biasa (Normal User)
